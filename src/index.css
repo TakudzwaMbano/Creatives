@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background-color: #FAF9F7;
+    color: #111111;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .text-display {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .masonry {
+    column-count: 3;
+    column-gap: 1.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .masonry {
+      column-count: 1;
+    }
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-ink text-cream font-display font-semibold px-7 py-4 rounded-full text-sm tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 border-2 border-ink text-ink font-display font-semibold px-7 py-4 rounded-full text-sm tracking-wide transition-all duration-300 hover:bg-ink hover:text-cream active:scale-95;
+  }
+
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs font-body font-bold tracking-widest uppercase;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  }
+}
+
+.observe-fade {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.observe-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.observe-fade-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.observe-fade-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.observe-fade-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.observe-fade-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delays */
+.delay-100 { transition-delay: 0.1s; }
+.delay-200 { transition-delay: 0.2s; }
+.delay-300 { transition-delay: 0.3s; }
+.delay-400 { transition-delay: 0.4s; }
+.delay-500 { transition-delay: 0.5s; }
+.delay-600 { transition-delay: 0.6s; }
