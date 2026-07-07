@@ -9,6 +9,7 @@ import Gallery from './components/Gallery';
 import Testimonials from './components/Testimonials';
 import Partners from './components/Partners';
 import Footer from './components/Footer';
+import Cursor from './components/Cursor';
 
 function App() {
   useEffect(() => {
@@ -43,6 +44,7 @@ function App() {
       <Testimonials />
       <Partners />
       <Footer />
+      <Cursor />
     </div>
   );
 }

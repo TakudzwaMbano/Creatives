@@ -1,4 +1,6 @@
 import { ArrowRight, Instagram, Twitter, Youtube, Linkedin } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { sectionVariant, staggerChildren } from '../motion/variants';
 
 const footerNav = {
   Community: ['About Us', 'Events', 'Gallery', 'Blog', 'Podcast'],
@@ -7,8 +9,14 @@ const footerNav = {
 };
 
 export default function Footer() {
+  const shouldReduce = useReducedMotion();
   return (
-    <footer className="bg-ink text-cream pt-20 pb-10 overflow-hidden">
+    <motion.footer className="bg-ink text-cream pt-20 pb-10 overflow-hidden"
+      initial={shouldReduce ? undefined : 'hidden'}
+      whileInView={shouldReduce ? undefined : 'show'}
+      viewport={{ once: true, amount: 0.15 }}
+      variants={sectionVariant}
+    >
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Top */}
@@ -102,17 +110,17 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-cream/10">
-          <p className="font-body text-xs text-cream/30">
+        <motion.div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-cream/10" variants={staggerChildren(0.06)}>
+          <motion.p className="font-body text-xs text-cream/30" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
             © {new Date().getFullYear()} Creatives Lunch. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200">Privacy</a>
-            <a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200">Terms</a>
-            <a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200">Cookies</a>
-          </div>
-        </div>
+          </motion.p>
+          <motion.div className="flex items-center gap-6" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { staggerChildren: 0.08 } } }}>
+            <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Privacy</motion.a>
+            <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Terms</motion.a>
+            <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Cookies</motion.a>
+          </motion.div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

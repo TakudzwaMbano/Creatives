@@ -1,3 +1,7 @@
+import React from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { sectionVariant, staggerChildren } from '../motion/variants';
+
 const images = [
   { src: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Creative workshop', tall: false },
   { src: 'https://images.pexels.com/photos/3184639/pexels-photo-3184639.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Design session', tall: true },
@@ -11,8 +15,56 @@ const images = [
 ];
 
 export default function Gallery() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
+  const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const shouldReduce = useReducedMotion();
+
+  React.useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    let fallback: number | null = null;
+    const prefersReduced = shouldReduce;
+
+    const onIntersect: IntersectionObserverCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+          observer.disconnect();
+          if (fallback) {
+            window.clearTimeout(fallback);
+            fallback = null;
+          }
+          section.classList.add('in-view');
+        }
+      });
+    };
+
+    const io = new IntersectionObserver(onIntersect, { threshold: [0, 0.25, 0.5] });
+    io.observe(section);
+
+    if (prefersReduced) {
+      section.classList.add('in-view');
+    } else {
+      fallback = window.setTimeout(() => {
+        section.classList.add('in-view');
+        fallback = null;
+        io.disconnect();
+      }, 600);
+    }
+
+    return () => {
+      io.disconnect();
+      if (fallback) window.clearTimeout(fallback);
+    };
+  }, [shouldReduce]);
+
   return (
-    <section id="gallery" className="py-24 lg:py-36 bg-cream overflow-hidden">
+    <motion.section ref={sectionRef} id="gallery" className="py-24 lg:py-36 bg-cream overflow-hidden gallery-entrance"
+      initial={shouldReduce ? undefined : 'hidden'}
+      whileInView={shouldReduce ? undefined : 'show'}
+      viewport={{ once: true, amount: 0.15 }}
+      variants={sectionVariant}
+    >
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Header */}
@@ -32,9 +84,16 @@ export default function Gallery() {
         </div>
 
         {/* Masonry grid */}
-        <div className="masonry observe-fade">
+        <div className="masonry">
           {images.map((img, i) => (
-            <div key={i} className="masonry-item rounded-2xl overflow-hidden card-hover cursor-pointer">
+            <motion.div
+              key={i}
+              ref={(el) => (cardRefs.current[i] = el)}
+              className="masonry-item rounded-2xl overflow-hidden card-hover cursor-pointer gallery-card"
+              variants={{ hidden: { opacity: 0, y: 24, scale: 0.99 }, show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 220, damping: 18 } } }}
+              whileHover={shouldReduce ? undefined : { scale: 1.04 }}
+              style={{ originY: 0.5 }}
+            >
               <img
                 src={img.src}
                 alt={img.alt}
@@ -42,10 +101,10 @@ export default function Gallery() {
                 style={{ aspectRatio: img.tall ? '3/4' : '4/3' }}
                 loading="lazy"
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

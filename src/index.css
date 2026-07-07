@@ -49,6 +49,42 @@
   }
 }
 
+  /* Micro-interaction cursor */
+  .cursor-circle {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(1);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    mix-blend-mode: difference;
+    transition: transform 180ms ease, width 180ms ease, height 180ms ease, background 180ms ease;
+    z-index: 9999;
+  }
+
+  /* Hover expand over interactive elements */
+  .cursor-circle.is-hover { transform: translate(-50%, -50%) scale(1.6); background: rgba(244,194,29,0.12); }
+
+  /* Force-visible fallback for elements that remain hidden due to animation issues (mobile fallback) */
+  .force-visible { opacity: 1 !important; transform: none !important; visibility: visible !important; display: block !important; }
+
+  @media (max-width: 768px) {
+    /* Reduce animation distances/durations further on mobile */
+    .observe-fade, .observe-fade-left, .observe-fade-right { transform: translateY(12px) !important; transition-duration: 420ms !important; }
+    .gallery-entrance { transform: translateY(18px) scale(0.99) !important; transition-duration: 520ms !important; }
+    .gallery-card { transform: translateY(8px) !important; transition-duration: 420ms !important; }
+    .about-entrance { transform: translateY(16px) scale(0.98) !important; transition-duration: 520ms !important; }
+  }
+
+  /* Typewriter overlay styling */
+  .heading-static { visibility: hidden; }
+  .typewriter-overlay { position: absolute; inset: 0; top: 0; left: 0; display: block; pointer-events: none; }
+  .typewriter-text { display: inline-block; white-space: pre-wrap; }
+  .typewriter-cursor { display: inline-block; margin-left: 6px; opacity: 1; animation: type-cursor 1s steps(2, start) infinite; }
+  @keyframes type-cursor { 0% { opacity: 1 } 50% { opacity: 0 } 100% { opacity: 1 } }
+
 @layer components {
   .btn-primary {
     @apply inline-flex items-center gap-2 bg-ink text-cream font-display font-semibold px-7 py-4 rounded-full text-sm tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95;
@@ -69,8 +105,8 @@
 
 .observe-fade {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .observe-fade.visible {
@@ -80,8 +116,8 @@
 
 .observe-fade-left {
   opacity: 0;
-  transform: translateX(-32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateX(-18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .observe-fade-left.visible {
@@ -91,13 +127,66 @@
 
 .observe-fade-right {
   opacity: 0;
-  transform: translateX(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateX(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .observe-fade-right.visible {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Gallery entrance initial state */
+
+.gallery-entrance { opacity: 0; transform: translateY(24px) scale(0.98); transition: transform 640ms cubic-bezier(.2,1.05,.3,1), opacity 640ms cubic-bezier(.2,1.05,.3,1); }
+
+/* Individual cards start slightly lower and transparent */
+.gallery-card { opacity: 0; transform: translateY(12px) scale(0.99); transition: transform 520ms cubic-bezier(.2,1,.25,1), opacity 520ms ease; }
+
+/* Hover interactions for premium feel */
+.gallery-card img { transition: transform 420ms cubic-bezier(.2,.9,.2,1); }
+.gallery-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 18px 40px rgba(15,15,15,0.12); }
+.gallery-card:hover img { transform: scale(1.03); }
+
+/* When in view, reveal the section and stagger cards via nth-child */
+.gallery-entrance.in-view { opacity: 1; transform: translateY(0) scale(1); }
+.gallery-entrance.in-view .gallery-card:nth-child(1) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 120ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(2) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 220ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(3) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 320ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(4) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 420ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(5) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 520ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(6) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 620ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(7) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 720ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(8) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 820ms; }
+.gallery-entrance.in-view .gallery-card:nth-child(9) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 920ms; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-entrance, .gallery-card, .hero-slider .slide-img { transition: none !important; animation: none !important; }
+}
+
+/* About section entrance */
+
+.about-entrance { opacity: 0; transform: translateY(24px) scale(0.95); transition: transform 640ms cubic-bezier(.2,1.05,.3,1), opacity 640ms cubic-bezier(.2,1.05,.3,1); }
+
+.about-entrance h2, .about-entrance p, .about-entrance .card-hover, .about-entrance img { opacity: 0; transform: translateY(8px); transition: transform 420ms cubic-bezier(.2,1,.25,1), opacity 420ms ease; }
+
+/* When in view apply final state and stagger children using transition-delay */
+.about-entrance.in-view { opacity: 1; transform: translateY(0) scale(1); }
+.about-entrance.in-view h2 { opacity: 1; transform: translateY(0); transition-delay: 80ms; }
+.about-entrance.in-view p { opacity: 1; transform: translateY(0); transition-delay: 160ms; }
+.about-entrance.in-view img { opacity: 1; transform: translateY(0); transition-delay: 240ms; }
+
+/* Stagger feature cards using nth-child - they are the children of the cards container */
+.about-entrance.in-view .lg\:col-span-2 > .card-hover:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 200ms; }
+.about-entrance.in-view .lg\:col-span-2 > .card-hover:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 280ms; }
+.about-entrance.in-view .lg\:col-span-2 > .card-hover:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 360ms; }
+
+.card-hover { transition: transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms ease; }
+.card-hover:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 40px rgba(15,15,15,0.12); }
+
+@media (prefers-reduced-motion: reduce) {
+  .about-entrance, .about-entrance h2, .about-entrance p, .about-entrance .card-hover, .about-entrance img { transition: none !important; animation: none !important; transform: none !important; opacity: 1 !important; }
 }
 
 /* Stagger delays */
@@ -107,3 +196,116 @@
 .delay-400 { transition-delay: 0.4s; }
 .delay-500 { transition-delay: 0.5s; }
 .delay-600 { transition-delay: 0.6s; }
+
+/* Hero slideshow styles */
+.hero-slider { position: relative; height: 100%; width: 100%; overflow: hidden; }
+.hero-slider .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; display: flex; align-items: center; justify-content: center; }
+.hero-slider .slide.active { opacity: 1; }
+/* Hero Ken Burns cinematic zoom-out */
+.hero-slider .slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+  /* subtle slow zoom-out: start larger (1.15) then ease out to 1.0 and loop smoothly */
+  animation: kenburns-zoom 16s ease-out infinite;
+}
+
+@keyframes kenburns-zoom {
+  0% { transform: scale(1.15); }
+  50% { transform: scale(1.00); }
+  100% { transform: scale(1.15); }
+}
+
+/* Minimal nav buttons/dots */
+.hero-slider + .controls { position: absolute; z-index: 40; }
+
+/* Accessibility focus styles for controls */
+button:focus { outline: 2px solid rgba(255,255,255,0.15); outline-offset: 2px; }
+
+/* Small touch-friendly hit target for dots */
+.pagination-dot { width: 10px; height: 10px; border-radius: 9999px; }
+
+/* Gentle hover on CTA buttons */
+a[style*="#F4C21D"]:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+
+@media (max-width: 768px) {
+  .hero-slider .slide-img { transition-duration: 9s; }
+}
+
+/* 3D extruded hero heading */
+.hero-3d {
+  font-size: clamp(56px, 9.5vw, 120px);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  font-weight: 900;
+  color: #fff;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 900px;
+  transition: transform 400ms cubic-bezier(.2,.9,.2,1), opacity 300ms ease;
+}
+.hero-3d span { display: block; }
+
+.hero-3d::before,
+.hero-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform-origin: left top;
+}
+
+/* Soft extrusion technique: multiple layered shadows via text-shadow fallback */
+.hero-3d {
+  text-shadow: 0 1px 0 rgba(0,0,0,0.25), 0 2px 2px rgba(0,0,0,0.15);
+}
+
+.hero-3d.reveal { opacity: 1; transform: translateY(0) translateZ(0); }
+.hero-3d { opacity: 0; transform: translateY(18px); }
+
+/* Use CSS variable driven subtle tilt and parallax based on mouse position */
+:root { --mx: 0; --my: 0; }
+.hero-3d { transform: rotateX(calc(var(--my) * 2deg)) rotateY(calc(var(--mx) * -6deg)) translateY(0); }
+
+/* floating animation: include rotate transforms so animation doesn't wipe parallax transforms */
+.hero-3d { animation: floatY 6s ease-in-out infinite; --float: 0px; }
+@keyframes floatY {
+  0%, 100% { transform: rotateX(calc(var(--my) * 2deg)) rotateY(calc(var(--mx) * -6deg)) translateY(0); }
+  50% { transform: rotateX(calc(var(--my) * 2deg)) rotateY(calc(var(--mx) * -6deg)) translateY(-3px); }
+}
+
+/* subtle highlight using pseudo-element */
+.hero-3d::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: linear-gradient(120deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.015) 40%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Depth extrusion via layered text-shadow to emulate 8-12px depth */
+.hero-3d span { 
+  text-shadow:
+    0 1px 0 rgba(0,0,0,0.12),
+    0 2px 0 rgba(0,0,0,0.11),
+    0 3px 0 rgba(0,0,0,0.10),
+    0 4px 0 rgba(0,0,0,0.09),
+    0 5px 0 rgba(0,0,0,0.08),
+    0 6px 6px rgba(0,0,0,0.12);
+}
+
+/* reduce size on smaller screens */
+@media (max-width: 1024px) {
+  .hero-3d { font-size: clamp(40px, 8.5vw, 72px); }
+}
+@media (max-width: 640px) {
+  .hero-3d { font-size: clamp(28px, 8.5vw, 44px); }
+}
+
+/* Navigation over hero: ensure smooth fade in for link colors */
+header { transition: background-color 280ms ease, color 280ms ease; }
