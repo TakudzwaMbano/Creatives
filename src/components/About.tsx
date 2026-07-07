@@ -169,7 +169,7 @@ export default function About() {
       viewport={{ once: true, amount: 0.15 }}
       variants={sectionVariant}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="site-container">
 
         {/* Section header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-20">

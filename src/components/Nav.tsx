@@ -27,7 +27,7 @@ export default function Nav() {
         scrolled ? 'bg-white shadow-sm py-2' : 'bg-transparent py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 relative">
+      <div className="site-container relative">
         <div className="flex items-center justify-between gap-4 h-14">
           {/* Left: mobile hamburger + logo */}
             <div className="flex items-center gap-3 min-w-0">

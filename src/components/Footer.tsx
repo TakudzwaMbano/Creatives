@@ -17,7 +17,7 @@ export default function Footer() {
       viewport={{ once: true, amount: 0.15 }}
       variants={sectionVariant}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="site-container">
 
         {/* Top */}
         <div className="grid lg:grid-cols-2 gap-12 mb-20 pb-16 border-b border-cream/10">

@@ -41,7 +41,7 @@ export default function Hero() {
       </div>
 
       <div className="relative z-20 h-full w-full">
-        <div className="mx-auto flex h-full w-full max-w-7xl items-center px-5 py-5 sm:px-7 sm:py-6 lg:px-10 lg:py-6">
+        <div className="site-container flex h-full w-full items-center py-6">
           <motion.div
             className="w-full max-w-[550px]"
             initial={shouldReduceMotion ? undefined : { opacity: 0, y: 18 }}

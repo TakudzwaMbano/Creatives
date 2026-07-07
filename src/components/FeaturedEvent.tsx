@@ -3,7 +3,7 @@ import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 export default function FeaturedEvent() {
   return (
     <section id="events" className="py-16 lg:py-24 bg-cream overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="site-container">
 
         {/* Label */}
         <div className="flex items-center justify-between mb-12">

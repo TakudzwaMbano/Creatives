@@ -5,7 +5,7 @@ const partners = [
 export default function Partners() {
   return (
     <section className="py-12 border-y border-ink/8 bg-cream">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="site-container">
         <p className="font-body text-xs font-bold uppercase tracking-widest text-ink/30 text-center mb-10 observe-fade">
           Trusted by creative teams at
         </p>

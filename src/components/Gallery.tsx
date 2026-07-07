@@ -15,11 +15,13 @@ const images = [
 
 export default function Gallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [index, setIndex] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
   const [gap, setGap] = useState(24);
+  const [wrapperWidth, setWrapperWidth] = useState(0);
   const shouldReduce = useReducedMotion();
 
   const count = images.length;
@@ -76,13 +78,15 @@ export default function Gallery() {
   // measure sizes
   const measure = useCallback(() => {
     const c = cardRef.current;
+    const wrapper = wrapperRef.current;
     const track = trackRef.current;
-    if (!c || !track) return;
+    if (!c || !wrapper || !track) return;
     const w = c.getBoundingClientRect().width;
     const style = getComputedStyle(track);
     const g = parseFloat(style.gap || '24') || 24;
     setCardWidth(w);
     setGap(g);
+    setWrapperWidth(wrapper.getBoundingClientRect().width);
   }, []);
 
   useEffect(() => {
@@ -91,8 +95,8 @@ export default function Gallery() {
     return () => window.removeEventListener('resize', measure);
   }, [measure]);
 
-  // Center calculation: padding on track ensures center alignment
-  const x = -(index * (cardWidth + gap));
+  // Center calculation: align active card in wrapper center
+  const x = wrapperWidth ? wrapperWidth / 2 - cardWidth / 2 - index * (cardWidth + gap) : 0;
 
   // Navigation
   const prev = useCallback(() => setIndex((s) => (s - 1 + count) % count), [count]);
@@ -125,13 +129,13 @@ export default function Gallery() {
   // by the `scrollYProgress` MotionValue above so it updates every frame while scrolling.
 
   return (
-    <motion.section ref={sectionRef} id="gallery" className="py-12 lg:py-20 bg-cream overflow-visible gallery-entrance"
+    <motion.section ref={sectionRef} id="gallery" className="py-12 lg:py-20 bg-cream gallery-entrance"
       initial={shouldReduce ? undefined : { opacity: 0, scale: 0.95, y: 24 }}
       animate={shouldReduce ? undefined : { opacity: 1, scale: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 160, damping: 24 }}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-4 lg:px-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="site-container">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
           <div>
             <span className="section-label text-ink/40 block">Gallery</span>
             <h3 className="font-display font-bold text-ink text-3xl lg:text-4xl">Life at Creatives Lunch</h3>
@@ -140,11 +144,10 @@ export default function Gallery() {
         </div>
 
         {/* Carousel viewport */}
-        <div className="relative overflow-visible">
-          {/* Track padding to center cards */}
+        <div ref={wrapperRef} className="relative overflow-hidden">
           <motion.div
             ref={trackRef}
-            className="carousel-track flex items-center gap-6 px-[var(--track-pad)]"
+            className="carousel-track flex items-center gap-6"
             // x controls horizontal scroll position; `combinedScale` updates every frame
             style={{ x, scale: combinedScale, ['--gallery-shadow' as any]: combinedShadow }}
             drag={shouldReduce ? false : 'x'}
@@ -192,7 +195,6 @@ export default function Gallery() {
       <style>{`
         .carousel-track { gap: 28px; }
         .carousel-card { box-shadow: 0 18px 40px rgba(2,6,23,var(--gallery-shadow,0.14)); }
-        .carousel-track { padding-left: calc((100vw - clamp(280px,52vw,720px)) / 2); padding-right: calc((100vw - clamp(280px,52vw,720px)) / 2); }
         @media (max-width: 768px) { .carousel-track { gap: 16px; } button[aria-label="Previous"], button[aria-label="Next"] { width: 52px; height: 52px; } }
       `}</style>
     </motion.section>
