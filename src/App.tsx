@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import About from './components/About';
-import CreativeFields from './components/CreativeFields';
 import FeaturedEvent from './components/FeaturedEvent';
 import Membership from './components/Membership';
 import Gallery from './components/Gallery';
@@ -37,7 +36,6 @@ function App() {
       <Nav />
       <Hero />
       <About />
-      <CreativeFields />
       <FeaturedEvent />
       <Membership />
       <Gallery />

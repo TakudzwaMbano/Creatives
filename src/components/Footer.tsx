@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         {/* Nav columns */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
           {Object.entries(footerNav).map(([category, links]) => (
             <div key={category}>
               <p className="font-body text-xs font-bold uppercase tracking-widest text-cream/30 mb-5">

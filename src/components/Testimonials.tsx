@@ -24,11 +24,11 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 lg:py-36 bg-ink overflow-hidden">
+    <section className="py-16 lg:py-24 bg-ink overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Header */}
-        <div className="mb-16 observe-fade">
+        <div className="mb-10 observe-fade">
           <span className="section-label text-cream/30 mb-4 block">
             <span className="w-6 h-px bg-cream/20 inline-block mr-2 align-middle" />
             Member Stories

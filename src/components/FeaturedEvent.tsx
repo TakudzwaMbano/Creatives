@@ -2,7 +2,7 @@ import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 
 export default function FeaturedEvent() {
   return (
-    <section id="events" className="py-24 lg:py-36 bg-cream overflow-hidden">
+    <section id="events" className="py-16 lg:py-24 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Label */}
@@ -66,7 +66,7 @@ export default function FeaturedEvent() {
 
             <a
               href="#"
-              className="inline-flex items-center gap-3 bg-cream text-ink font-display font-bold text-sm px-7 py-4 rounded-full w-fit hover:scale-105 hover:shadow-2xl transition-all duration-300"
+              className="inline-flex items-center gap-3 bg-cream text-ink font-display font-bold text-sm px-6 py-3 rounded-full w-fit hover:scale-105 hover:shadow-2xl transition-all duration-300"
             >
               Reserve Your Spot
               <ArrowRight size={16} />

@@ -163,7 +163,7 @@ export default function About() {
   }
 
   return (
-    <motion.section ref={sectionRef} id="about" className="py-24 lg:py-36 bg-cream about-entrance"
+    <motion.section ref={sectionRef} id="about" className="py-16 lg:py-24 bg-cream about-entrance"
       initial={shouldReduce ? undefined : 'hidden'}
       whileInView={shouldReduce ? undefined : 'show'}
       viewport={{ once: true, amount: 0.15 }}

@@ -71,11 +71,11 @@ const tiers = [
 
 export default function Membership() {
   return (
-    <section id="membership" className="py-24 lg:py-36 bg-cream overflow-hidden">
+    <section id="membership" className="py-16 lg:py-24 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Header */}
-        <div className="max-w-2xl mb-16 observe-fade">
+        <div className="max-w-2xl mb-10 observe-fade">
           <span className="section-label text-ink/40 mb-4 block">
             <span className="w-6 h-px bg-ink/30 inline-block mr-2 align-middle" />
             Membership
