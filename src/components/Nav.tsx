@@ -28,25 +28,26 @@ export default function Nav() {
       }`}
     >
       <div className="site-container relative">
-        <div className="flex items-center justify-between gap-4 h-14">
-          {/* Left: mobile hamburger + logo */}
-            <div className="flex items-center gap-3 min-w-0">
-              <button
-                className={`lg:hidden p-2 ${scrolled ? 'text-ink' : 'text-white'}`}
-                onClick={() => setOpen(!open)}
-                aria-label="Toggle menu"
-              >
-                {open ? <X size={22} /> : <Menu size={22} />}
-              </button>
-              <a href="#" className="flex items-center gap-3 group">
-                <div className="w-8 h-8 bg-ink rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-yellow rounded-full" />
-                </div>
-                <span className={`font-display font-bold ${scrolled ? 'text-ink' : 'text-white'} text-base tracking-tight leading-none`}>
-                  Creatives Lunch
-                </span>
-              </a>
-            </div>
+        <div className="flex h-14 items-center justify-between gap-3 px-0 sm:px-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <button
+              className={`lg:hidden flex h-10 w-10 items-center justify-center px-0 ${scrolled ? 'text-ink' : 'text-white'}`}
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle menu"
+            >
+              {open ? <X size={18} strokeWidth={1.8} /> : <div className="flex flex-col gap-1.5">
+                <span className="block h-[1px] w-4 bg-current" />
+                <span className="block h-[1px] w-4 bg-current" />
+              </div>}
+            </button>
+            <a href="#" className="flex items-center group">
+              <img
+                src="/assets/images/logo.PNG"
+                alt="Creatives Lunch logo"
+                className="h-10 w-10 object-contain"
+              />
+            </a>
+          </div>
 
           {/* Centered desktop nav */}
           <nav className="hidden lg:flex flex-1 justify-center pointer-events-auto">
@@ -63,23 +64,12 @@ export default function Nav() {
             </div>
           </nav>
 
-          {/* Right: CTA on desktop, hamburger on mobile */}
+          {/* Right: CTA on desktop only */}
           <div className="flex items-center gap-3">
-            {/* Desktop CTA on right */}
             <div className="hidden lg:flex items-center">
               <a
                 href="#membership"
-                className={`${scrolled ? 'bg-ink text-cream' : 'bg-white text-black'} font-display font-semibold text-sm h-12 px-6 rounded-full inline-flex items-center justify-center transition-all duration-200 hover:shadow-md`}
-              >
-                Become a Member
-              </a>
-            </div>
-
-            {/* Mobile CTA on right */}
-            <div className="lg:hidden">
-              <a
-                href="#membership"
-                className="font-display font-semibold text-sm h-12 px-4 rounded-full border border-white text-white bg-transparent inline-flex items-center justify-center"
+                className={`${scrolled ? 'bg-ink text-cream' : 'bg-white text-black'} premium-cta font-display font-semibold text-sm h-12 px-6 rounded-full inline-flex items-center justify-center transition-all duration-200 hover:shadow-md`}
               >
                 Become a Member
               </a>

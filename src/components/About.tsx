@@ -8,19 +8,19 @@ const features = [
     icon: '◎',
     title: 'Connect',
     desc: 'Meet fellow creatives across disciplines. Build real relationships that spark collaboration.',
-    color: 'bg-sky',
+    accentColor: 'bg-accent-cyan',
   },
   {
     icon: '✦',
     title: 'Create',
     desc: 'Work on shared projects, join creative challenges, and push your craft further.',
-    color: 'bg-yellow',
+    accentColor: 'bg-accent-yellow',
   },
   {
     icon: '↗',
     title: 'Grow',
     desc: "Learn from peers, get feedback, attend workshops, and level up your career.",
-    color: 'bg-lime',
+    accentColor: 'bg-accent-lime',
   },
 ];
 
@@ -163,19 +163,23 @@ export default function About() {
   }
 
   return (
-    <motion.section ref={sectionRef} id="about" className="py-16 lg:py-24 bg-cream about-entrance"
-      initial={shouldReduce ? undefined : 'hidden'}
-      whileInView={shouldReduce ? undefined : 'show'}
-      viewport={{ once: true, amount: 0.15 }}
-      variants={sectionVariant}
+    <motion.section
+      ref={sectionRef}
+      id="about"
+      className="relative z-10 py-16 lg:py-24 paper-texture"
+      style={{ backgroundColor: '#F8F8F5' }}
+      initial={shouldReduce ? undefined : { opacity: 0, y: 24 }}
+      whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <div className="site-container">
+      <div className="site-container relative">
 
         {/* Section header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-20">
-          <div className="max-w-xl">
-            <span className="section-label text-ink/40 mb-4 block">
-              <span className="w-6 h-px bg-ink/30 inline-block mr-2 align-middle" />
+        <div className="mb-14 flex flex-col gap-8 pt-8 lg:mb-16 lg:flex-row lg:items-end lg:justify-between lg:pt-12">
+          <motion.div className="relative max-w-xl" initial={shouldReduce ? undefined : { opacity: 0, y: 10 }} whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+            <span className="section-label mb-4 block text-ink/40">
+              <span className="mr-2 inline-block h-px w-6 align-middle bg-ink/30" />
               Our Story
             </span>
             <div className="relative">
@@ -183,7 +187,7 @@ export default function About() {
               <h2 ref={headingRef} className="font-display font-bold text-ink text-[clamp(2.5rem,5vw,4rem)] leading-[1.05] heading-static">
                 A table where
                 <br />
-                <em className="not-italic text-violet">every creative</em>
+                <em className="not-italic accent-yellow">every creative</em>
                 <br />
                 has a seat.
               </h2>
@@ -195,25 +199,25 @@ export default function About() {
               </h2>
               {/* We'll use JS to populate .typewriter-text to avoid reflow */}
             </div>
-          </div>
-          <div className="max-w-sm lg:mb-2">
-            <p ref={paraRef} className="font-body text-ink/60 text-base leading-relaxed">
+          </motion.div>
+          <motion.div className="max-w-sm lg:mb-2" initial={shouldReduce ? undefined : { opacity: 0, y: 18 }} whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}>
+            <p ref={paraRef} className="font-body text-base leading-relaxed text-ink/60">
               Creatives Lunch started as a small gathering of curious people who wanted more than networking — they wanted genuine community. From that first lunch, we've grown into a home for over 1,200 creatives across 12 cities.
             </p>
             <a
               href="#membership"
-              className="inline-flex items-center gap-2 mt-6 font-display font-semibold text-sm text-ink border-b border-ink pb-0.5 hover:gap-4 transition-all duration-200"
+              className="mt-6 inline-flex items-center gap-2 border-b border-ink pb-0.5 font-display text-sm font-semibold text-ink transition-all duration-200 hover:gap-4"
             >
               Our full story <ArrowUpRight size={14} />
             </a>
-          </div>
+          </motion.div>
         </div>
 
         {/* Split layout */}
-        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 mb-24">
+        <div className="mb-16 grid gap-6 lg:mb-20 lg:grid-cols-5 lg:gap-8">
           {/* Image collage */}
-          <motion.div className="lg:col-span-3 relative h-[420px] lg:h-[560px]" variants={staggerChildren(0.12)}>
-            <motion.div className="absolute left-0 top-0 w-[65%] h-[75%] rounded-3xl overflow-hidden shadow-xl" variants={{ hidden: { opacity: 0, scale: 0.98 }, show: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 160, damping: 20 } } }}>
+          <motion.div className="relative h-[420px] lg:col-span-3 lg:h-[560px]" variants={staggerChildren(0.12)}>
+            <motion.div className="absolute left-0 top-0 h-[75%] w-[65%] overflow-hidden rounded-[28px] border border-ink/10 bg-[#F8F8F5] shadow-[0_24px_60px_rgba(17,17,17,0.12)]" variants={{ hidden: { opacity: 0, scale: 0.98 }, show: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 160, damping: 20 } } }}>
               <img
                 ref={(el) => (imageRefs.current[0] = el)}
                 src="https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=900"
@@ -222,7 +226,7 @@ export default function About() {
                 loading="lazy"
               />
             </motion.div>
-            <motion.div className="absolute right-0 bottom-0 w-[50%] h-[60%] rounded-3xl overflow-hidden shadow-xl border-4 border-cream" variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}>
+            <motion.div className="absolute bottom-0 right-0 h-[60%] w-[50%] overflow-hidden rounded-[28px] border-4 border-[#FAF9F7] shadow-[0_24px_60px_rgba(17,17,17,0.12)]" variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}>
               <img
                 ref={(el) => (imageRefs.current[1] = el)}
                 src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=700"
@@ -231,8 +235,8 @@ export default function About() {
                 loading="lazy"
               />
             </motion.div>
-            <div className="absolute left-[30%] bottom-[18%] w-16 h-16 bg-yellow rounded-full z-10 animate-float shadow-lg" />
-            <div className="absolute top-4 right-[32%] bg-ink text-cream rounded-xl px-3 py-2 z-10 text-xs font-display font-semibold">
+            <div className="absolute bottom-[18%] left-[30%] z-10 h-16 w-16 rounded-full bg-accent-cyan opacity-30" />
+            <div className="absolute top-4 right-[32%] z-10 rounded-full bg-accent-lavender px-3 py-2 text-xs font-display font-semibold text-ink/80">
               Since 2019
             </div>
           </motion.div>
@@ -243,12 +247,15 @@ export default function About() {
               <motion.div
                 key={f.title}
                 ref={(el) => (cardRefs.current[i] = el)}
-                className="card-hover bg-cream border border-ink/10 rounded-2xl p-6 flex items-start gap-4 cursor-default"
+                className="card-hover relative bg-white border border-ink/8 rounded-2xl p-6 flex items-start gap-4 cursor-default overflow-hidden"
                 style={{ transformOrigin: 'center', transition: 'transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms ease' }}
                 variants={{ hidden: { opacity: 0, y: 18, scale: 0.96 }, show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 220, damping: 20 } } }}
                 whileHover={shouldReduce ? undefined : { y: -6, scale: 1.01 }}
               >
-                <div className={`w-12 h-12 ${f.color} rounded-xl flex items-center justify-center flex-shrink-0 text-xl font-bold`}>
+                {/* Thin accent line */}
+                <div className={`absolute left-0 top-0 bottom-0 w-[3px] ${f.accentColor}`} />
+                
+                <div className={`w-12 h-12 ${f.accentColor} rounded-xl flex items-center justify-center flex-shrink-0 text-xl font-bold text-ink`}>
                   {f.icon}
                 </div>
                 <div>

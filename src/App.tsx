@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div>
       <Nav />
       <Hero />
       <About />
