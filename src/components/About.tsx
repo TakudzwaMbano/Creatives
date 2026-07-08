@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { sectionVariant, staggerChildren } from '../motion/variants';
 
 const features = [
@@ -26,6 +26,7 @@ const features = [
 
 export default function About() {
   const sectionRef = React.useRef<HTMLElement | null>(null);
+  const collageRef = React.useRef<HTMLDivElement | null>(null);
   const shouldReduce = useReducedMotion();
   const headingRef = React.useRef<HTMLHeadingElement | null>(null);
   const typeRef = React.useRef<HTMLSpanElement | null>(null);
@@ -33,6 +34,15 @@ export default function About() {
   const typedStarted = React.useRef(false);
   const typedDone = React.useRef(false);
   const paraRef = React.useRef<HTMLParagraphElement | null>(null);
+
+  // Parallax scroll effect for images
+  const { scrollYProgress } = useScroll({
+    target: collageRef,
+    offset: ['start end', 'end start'],
+  });
+
+  const parallaxMainY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const parallaxSecondaryY = useTransform(scrollYProgress, [0, 1], [60, -20]);
   const imageRefs = React.useRef<Array<HTMLImageElement | null>>([]);
   const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
 
@@ -216,29 +226,150 @@ export default function About() {
         {/* Split layout */}
         <div className="mb-16 grid gap-6 lg:mb-20 lg:grid-cols-5 lg:gap-8">
           {/* Image collage */}
-          <motion.div className="relative h-[420px] lg:col-span-3 lg:h-[560px]" variants={staggerChildren(0.12)}>
-            <motion.div className="absolute left-0 top-0 h-[75%] w-[65%] overflow-hidden rounded-[28px] border border-ink/10 bg-[#F8F8F5] shadow-[0_24px_60px_rgba(17,17,17,0.12)]" variants={{ hidden: { opacity: 0, scale: 0.98 }, show: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 160, damping: 20 } } }}>
-              <img
+          <motion.div
+            ref={collageRef}
+            className="relative h-[420px] lg:col-span-3 lg:h-[560px]"
+            variants={staggerChildren(0.12)}
+          >
+            {/* Abstract background shape */}
+            <motion.div
+              className="absolute -inset-12 opacity-40 pointer-events-none"
+              initial={shouldReduce ? undefined : { opacity: 0 }}
+              whileInView={shouldReduce ? undefined : { opacity: 0.25 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+            >
+              <div
+                className="absolute w-96 h-96 rounded-full blur-3xl"
+                style={{
+                  background: 'radial-gradient(circle, rgba(142, 239, 255, 0.6) 0%, rgba(198, 255, 0, 0.3) 50%, transparent 100%)',
+                  top: '-100px',
+                  left: '-80px',
+                }}
+              />
+            </motion.div>
+
+            {/* Main image - top left with parallax and floating */}
+            <motion.div
+              className="absolute left-0 top-0 h-[75%] w-[65%] overflow-hidden rounded-[28px] border border-ink/10 bg-[#F8F8F5] shadow-[0_24px_60px_rgba(17,17,17,0.12)] group cursor-pointer"
+              variants={{
+                hidden: { opacity: 0, scale: 0.95, y: 20 },
+                show: {
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                  transition: { type: 'spring', stiffness: 160, damping: 20 },
+                },
+              }}
+              style={{ y: parallaxMainY }}
+              initial={shouldReduce ? undefined : 'hidden'}
+              whileInView={shouldReduce ? undefined : 'show'}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={shouldReduce ? undefined : { scale: 1.03, rotate: 1 }}
+              animate={
+                shouldReduce
+                  ? undefined
+                  : {
+                      y: [0, -3, 0],
+                    }
+              }
+              transition={
+                shouldReduce
+                  ? undefined
+                  : {
+                      y: parallaxMainY
+                        ? { type: 'spring', stiffness: 160, damping: 20 }
+                        : {
+                            duration: 4,
+                            repeat: Infinity,
+                            repeatType: 'reverse',
+                            ease: 'easeInOut',
+                          },
+                    }
+              }
+            >
+              <motion.img
                 ref={(el) => (imageRefs.current[0] = el)}
-                src="https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=900"
+                src="/assets/images/image1.jpeg"
                 alt="Creatives collaborating"
-                className="w-full h-full object-cover"
-                loading="lazy"
+                className="w-full h-full object-cover group-hover:shadow-[inset_0_0_60px_rgba(0,0,0,0.15)]"
+                transition={{ duration: 0.3 }}
               />
             </motion.div>
-            <motion.div className="absolute bottom-0 right-0 h-[60%] w-[50%] overflow-hidden rounded-[28px] border-4 border-[#FAF9F7] shadow-[0_24px_60px_rgba(17,17,17,0.12)]" variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.7 } } }}>
-              <img
+
+            {/* Secondary image - bottom right with offset and parallax */}
+            <motion.div
+              className="absolute bottom-0 right-0 h-[60%] w-[50%] overflow-hidden rounded-[28px] border-4 border-[#FAF9F7] shadow-[0_24px_60px_rgba(17,17,17,0.12)] group cursor-pointer"
+              variants={{
+                hidden: { opacity: 0, scale: 0.95, x: 30 },
+                show: {
+                  opacity: 1,
+                  scale: 1,
+                  x: 0,
+                  transition: { type: 'spring', stiffness: 140, damping: 22, delay: 0.15 },
+                },
+              }}
+              style={{ y: parallaxSecondaryY }}
+              initial={shouldReduce ? undefined : 'hidden'}
+              whileInView={shouldReduce ? undefined : 'show'}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={shouldReduce ? undefined : { scale: 1.03, rotate: -1 }}
+              animate={
+                shouldReduce
+                  ? undefined
+                  : {
+                      y: [0, -2, 0],
+                    }
+              }
+              transition={
+                shouldReduce
+                  ? undefined
+                  : {
+                      y: parallaxSecondaryY
+                        ? { type: 'spring', stiffness: 160, damping: 20 }
+                        : {
+                            duration: 5,
+                            repeat: Infinity,
+                            repeatType: 'reverse',
+                            ease: 'easeInOut',
+                            delay: 0.3,
+                          },
+                    }
+              }
+            >
+              <motion.img
                 ref={(el) => (imageRefs.current[1] = el)}
-                src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=700"
+                src="/assets/images/image2.jpeg"
                 alt="Creative workshop"
-                className="w-full h-full object-cover"
-                loading="lazy"
+                className="w-full h-full object-cover group-hover:shadow-[inset_0_0_60px_rgba(0,0,0,0.15)]"
+                transition={{ duration: 0.3 }}
               />
             </motion.div>
-            <div className="absolute bottom-[18%] left-[30%] z-10 h-16 w-16 rounded-full bg-accent-cyan opacity-30" />
-            <div className="absolute top-4 right-[32%] z-10 rounded-full bg-accent-lavender px-3 py-2 text-xs font-display font-semibold text-ink/80">
+
+            {/* Decorative circle */}
+            <motion.div
+              className="absolute bottom-[18%] left-[30%] z-10 h-16 w-16 rounded-full bg-accent-cyan opacity-30"
+              initial={shouldReduce ? undefined : { scale: 0, opacity: 0 }}
+              whileInView={shouldReduce ? undefined : { scale: 1, opacity: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+            />
+
+            {/* Since 2019 badge - spring scale-in */}
+            <motion.div
+              className="absolute top-4 right-[32%] z-10 rounded-full bg-accent-lavender px-3 py-2 text-xs font-display font-semibold text-ink/80 shadow-lg"
+              initial={shouldReduce ? undefined : { scale: 0, opacity: 0 }}
+              whileInView={shouldReduce ? undefined : { scale: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                type: 'spring',
+                stiffness: 200,
+                damping: 15,
+                delay: 0.35,
+              }}
+            >
               Since 2019
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Feature cards */}

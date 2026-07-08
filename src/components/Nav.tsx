@@ -24,27 +24,34 @@ export default function Nav() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-sm py-2' : 'bg-transparent py-4'
+        scrolled ? 'bg-white shadow-sm' : 'bg-transparent'
       }`}
+      style={{ height: '72px' }}
     >
-      <div className="site-container relative">
-        <div className="flex h-14 items-center justify-between gap-3 px-0 sm:px-0">
-          <div className="flex items-center gap-3 min-w-0">
+      <div className="site-container h-full relative">
+        <div className="flex h-full items-center justify-between px-0 sm:px-0">
+          <div className="flex items-center min-w-0" style={{ gap: '14px' }}>
             <button
-              className={`lg:hidden flex h-10 w-10 items-center justify-center px-0 ${scrolled ? 'text-ink' : 'text-white'}`}
+              className={`lg:hidden flex items-center justify-center p-0 ${scrolled ? 'text-ink' : 'text-white'}`}
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
+              style={{ width: '24px', height: '24px' }}
             >
-              {open ? <X size={18} strokeWidth={1.8} /> : <div className="flex flex-col gap-1.5">
-                <span className="block h-[1px] w-4 bg-current" />
-                <span className="block h-[1px] w-4 bg-current" />
-              </div>}
+              {open ? (
+                <X size={24} strokeWidth={1.5} />
+              ) : (
+                <div className="flex flex-col gap-1" style={{ gap: '6px' }}>
+                  <span className="block bg-current" style={{ width: '20px', height: '1.5px' }} />
+                  <span className="block bg-current" style={{ width: '20px', height: '1.5px' }} />
+                </div>
+              )}
             </button>
             <a href="#" className="flex items-center group">
               <img
                 src="/assets/images/logo.PNG"
                 alt="Creatives Lunch logo"
-                className="h-10 w-10 object-contain"
+                className="object-contain"
+                style={{ width: '44px', height: '44px' }}
               />
             </a>
           </div>
