@@ -97,33 +97,3 @@ export default function FeaturedEvent() {
     </section>
   );
 }
-
-        {/* Secondary events */}
-        <div className="grid md:grid-cols-3 gap-4 mt-6">
-          {[
-            { title: 'Design Critique Night', date: 'July 12, 2025', city: 'Johannesburg', color: 'bg-sky' },
-            { title: 'Photo Walk & Brunch', date: 'July 19, 2025', city: 'Nairobi', color: 'bg-lime' },
-            { title: 'Creative Portfolio Review', date: 'July 26, 2025', city: 'Lagos', color: 'bg-violet' },
-          ].map((event, i) => (
-            <div
-              key={event.title}
-              className={`observe-fade card-hover ${event.color} rounded-2xl p-6 cursor-pointer`}
-              style={{ transitionDelay: `${i * 100}ms` }}
-            >
-              <p className="font-body text-ink text-[10px] uppercase tracking-widest opacity-50 mb-3">
-                {event.date}
-              </p>
-              <h3 className="font-display font-bold text-ink text-lg leading-snug mb-2">
-                {event.title}
-              </h3>
-              <div className="flex items-center gap-1.5 text-ink/60 mt-auto">
-                <MapPin size={12} />
-                <span className="font-body text-xs">{event.city}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}

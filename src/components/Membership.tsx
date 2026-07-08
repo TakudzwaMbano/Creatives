@@ -124,14 +124,16 @@ export default function Membership() {
               initial={shouldReduce ? undefined : { opacity: 0, y: 40 }}
               whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: tier.floatDelay, ease: 'easeOut' }}
               animate={shouldReduce ? undefined : {
                 y: tier.featured ? [-8, 8] : [-6, 6],
               }}
               transition={{
-                repeat: Infinity,
-                repeatType: 'reverse',
-                duration: tier.featured ? 5 : 6,
+                opacity: { duration: 0.6, delay: tier.floatDelay, ease: 'easeOut' },
+                y: {
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  duration: tier.featured ? 5 : 6,
+                },
               }}
               whileHover={shouldReduce ? undefined : { y: -12 }}
             >
