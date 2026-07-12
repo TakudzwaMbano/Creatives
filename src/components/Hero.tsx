@@ -30,7 +30,7 @@ export default function Hero() {
 
   return (
     <motion.section ref={heroRef} className="relative h-screen min-h-screen w-full overflow-hidden overflow-x-hidden bg-black" style={{ opacity: heroOpacity }}>
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="hero-background-shell absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute inset-[-6%] will-change-transform"
           style={{
@@ -64,18 +64,12 @@ export default function Hero() {
             <img src={HERO_IMAGE} alt="Creative community background" className="h-full w-full object-cover" />
           </motion.video>
         </motion.div>
-        
-        {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 bg-black" style={{ opacity: 0.58 }} />
-        
-        {/* Radial vignette - darker on left, fades to transparent */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse 800px 600px at 20% 50%, rgba(17, 17, 17, 0.35) 0%, transparent 60%)',
-            pointerEvents: 'none',
-          }}
-        />
+
+        <div className="hero-base-overlay absolute inset-0" />
+        <div className="hero-noise-layer absolute inset-0" />
+        <div className="hero-grid-layer absolute inset-0" />
+        <div className="hero-glow hero-glow-green absolute left-[-10%] top-[8%] h-[26rem] w-[26rem] rounded-full" />
+        <div className="hero-glow hero-glow-orange absolute bottom-[-12%] right-[-8%] h-[32rem] w-[32rem] rounded-full" />
       </div>
 
       <div className="relative z-20 h-full w-full">

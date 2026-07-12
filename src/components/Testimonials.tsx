@@ -66,6 +66,11 @@ export default function Testimonials() {
               transition={{ duration: 0.6, delay: i * 0.1, ease: 'easeOut' }}
             >
               <div className={`absolute left-0 right-0 top-0 h-1 ${t.accent}`} />
+
+              <div className="overflow-hidden rounded-2xl border border-ink/8 bg-ink/5">
+                <img src={t.avatar} alt={t.name} className="h-44 w-full object-cover" loading="lazy" />
+              </div>
+
               <div className={`text-6xl font-display font-bold ${t.accent} opacity-20`}>"</div>
 
               <blockquote className="flex-1 text-base leading-relaxed font-body text-ink/80">

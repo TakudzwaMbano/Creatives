@@ -21,6 +21,7 @@ export default function Gallery() {
   const [cardWidth, setCardWidth] = useState(0);
   const [gap, setGap] = useState(24);
   const [wrapperWidth, setWrapperWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const shouldReduce = useReducedMotion();
 
   const count = images.length;
@@ -79,12 +80,17 @@ export default function Gallery() {
   }, []);
 
   useEffect(() => {
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
+    const updateViewport = () => {
+      setIsMobile(window.innerWidth < 768);
+      measure();
+    };
+
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
   }, [measure]);
 
-  const x = wrapperWidth ? wrapperWidth / 2 - cardWidth / 2 - index * (cardWidth + gap) : 0;
+  const x = wrapperWidth && !isMobile ? wrapperWidth / 2 - cardWidth / 2 - index * (cardWidth + gap) : 0;
 
   const prev = useCallback(() => setIndex((s) => (s - 1 + count) % count), [count]);
   const next = useCallback(() => setIndex((s) => (s + 1) % count), [count]);
@@ -125,36 +131,44 @@ export default function Gallery() {
           <div className="text-sm text-ink/60 font-display">{String(index + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}</div>
         </div>
 
-        <div ref={wrapperRef} className="relative overflow-hidden">
+        <div ref={wrapperRef} className="relative overflow-hidden px-0 sm:px-0">
           <motion.div
             ref={trackRef}
-            className="carousel-track flex items-center gap-6"
+            className={`carousel-track flex items-center ${isMobile ? 'justify-center' : 'justify-start'}`}
             style={{ x, scale: combinedScale, ['--gallery-shadow' as any]: combinedShadow }}
-            drag={shouldReduce ? false : 'x'}
+            drag={shouldReduce || isMobile ? false : 'x'}
             dragConstraints={{ left: 0, right: 0 }}
-            onDragEnd={onDragEnd}
+            onDragEnd={isMobile ? undefined : onDragEnd}
             transition={{ type: 'spring', stiffness: 170, damping: 26, duration: 0.7 }}
             animate={{ x }}
           >
             {images.map((img, i) => {
               const isActive = i === index;
               const cardLocalScale = isActive ? 1 : 0.92;
+              const isHiddenOnMobile = isMobile && !isActive;
               return (
                 <motion.div
                   key={i}
                   ref={i === 0 ? cardRef : null}
                   className="carousel-card rounded-[32px] overflow-hidden shadow-xl bg-black/5 flex-shrink-0"
-                  style={{ width: 'clamp(280px, 52vw, 720px)', aspectRatio: '3/4', transformOrigin: 'center', opacity: isActive ? 1 : combinedInactiveOpacity }}
+                  style={{
+                    width: isMobile ? 'min(88vw, 420px)' : 'clamp(280px, 52vw, 720px)',
+                    aspectRatio: '3/4',
+                    transformOrigin: 'center',
+                    opacity: isHiddenOnMobile ? 0 : isActive ? 1 : combinedInactiveOpacity,
+                    display: isHiddenOnMobile ? 'none' : 'block',
+                  }}
                   animate={{ scale: cardLocalScale }}
                   transition={{ type: 'spring', stiffness: 200, damping: 22 }}
                 >
                   <motion.div style={{ width: '100%', height: '100%', scale: combinedScale }}>
-                    <div className="relative w-full h-full">
-                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover" loading="lazy" />
-                      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
-                      <div className="absolute left-6 bottom-6 text-cream">
-                        <blockquote className="font-display font-bold text-lg lg:text-2xl leading-snug max-w-[70%]">"The best place to meet creatives."</blockquote>
-                        <div className="mt-3 text-sm opacity-90">— Creatives Lunch Member</div>
+                    <div className="relative h-full w-full">
+                      <img src={img.src} alt={img.alt} className="h-full w-full object-cover" loading="lazy" />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-5 py-5 text-cream sm:px-6 sm:py-6">
+                        <blockquote className="max-w-[70%] font-display text-lg font-bold leading-snug sm:text-xl lg:text-2xl">
+                          “The best place to meet creatives.”
+                        </blockquote>
+                        <div className="mt-2 text-sm opacity-90">— Creatives Lunch Member</div>
                       </div>
                     </div>
                   </motion.div>
@@ -174,7 +188,11 @@ export default function Gallery() {
       <style>{`
         .carousel-track { gap: 28px; }
         .carousel-card { box-shadow: 0 18px 40px rgba(2,6,23,var(--gallery-shadow,0.14)); }
-        @media (max-width: 768px) { .carousel-track { gap: 16px; } button[aria-label="Previous"], button[aria-label="Next"] { width: 52px; height: 52px; } }
+        @media (max-width: 768px) {
+          .carousel-track { gap: 0; padding: 0; margin: 0; }
+          .carousel-card { margin: 0 auto; }
+          button[aria-label="Previous"], button[aria-label="Next"] { width: 52px; height: 52px; }
+        }
       `}</style>
     </motion.section>
   );

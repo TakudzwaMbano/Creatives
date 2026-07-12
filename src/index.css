@@ -30,6 +30,52 @@
     letter-spacing: 0;
   }
 
+  .hero-background-shell {
+    isolation: isolate;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .hero-base-overlay {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.52) 45%, rgba(0, 0, 0, 0.65) 100%);
+    mix-blend-mode: normal;
+  }
+
+  .hero-noise-layer {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    opacity: 0.08;
+    mix-blend-mode: soft-light;
+  }
+
+  .hero-grid-layer {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 160px 160px;
+    opacity: 0.03;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+  }
+
+  .hero-glow {
+    filter: blur(90px);
+    opacity: 0.24;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    will-change: transform, filter;
+  }
+
+  .hero-glow-green {
+    background: radial-gradient(circle, rgba(11, 218, 81, 0.85) 0%, rgba(11, 218, 81, 0) 72%);
+  }
+
+  .hero-glow-orange {
+    background: radial-gradient(circle, rgba(190, 81, 3, 0.7) 0%, rgba(190, 81, 3, 0) 70%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow {
+      filter: blur(70px);
+    }
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Cocogoose Pro', 'Cocogoose', 'Inter', sans-serif;
     font-weight: 700;
