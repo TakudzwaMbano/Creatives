@@ -1,4 +1,4 @@
-import { ArrowRight, Instagram, Twitter, Youtube, Linkedin } from 'lucide-react';
+import { ArrowRight, Instagram, Twitter, Youtube, Linkedin, MessageCircleMore } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { sectionVariant, staggerChildren } from '../motion/variants';
 
@@ -145,14 +145,42 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <motion.div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-cream/10" variants={staggerChildren(0.06)}>
-          <motion.p className="font-body text-xs text-cream/30" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
-            © {new Date().getFullYear()} Creatives Lunch. All rights reserved.
-          </motion.p>
-          <motion.div className="flex items-center gap-6" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { staggerChildren: 0.08 } } }}>
-            <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Privacy</motion.a>
-            <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Terms</motion.a>
-            <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Cookies</motion.a>
+        <motion.div className="flex flex-col gap-4 pt-8 border-t border-cream/10" variants={staggerChildren(0.06)}>
+          <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+            <motion.p className="font-body text-xs text-cream/30" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
+              © {new Date().getFullYear()} Creatives Lunch. All rights reserved.
+            </motion.p>
+            <motion.div className="flex items-center gap-6" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { staggerChildren: 0.08 } } }}>
+              <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Privacy</motion.a>
+              <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Terms</motion.a>
+              <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Cookies</motion.a>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="flex flex-col items-center justify-center gap-2 border-t border-cream/10 pt-4 text-center text-[11px] text-cream/35 sm:flex-row sm:gap-4 sm:text-sm"
+            variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+          >
+            <span className="font-body">
+              Designed &amp; Developed by{' '}
+              <a
+                href="https://acrux.studio"
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium text-brand-green transition-colors duration-200 hover:text-brand-green/80"
+              >
+                Acrux
+              </a>
+            </span>
+            <a
+              href="https://wa.me/263714913385"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 font-body text-cream/50 transition-colors duration-200 hover:text-cream"
+            >
+              <MessageCircleMore size={13} className="text-brand-green" />
+              WhatsApp: +263 71 491 3385
+            </a>
           </motion.div>
         </motion.div>
       </div>
