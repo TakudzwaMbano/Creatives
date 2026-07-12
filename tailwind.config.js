@@ -6,15 +6,13 @@ export default {
       colors: {
         cream: '#FAF9F7',
         ink: '#111111',
-        yellow: '#F4C21D',
-        sky: '#7DD3FC',
-        violet: '#C084FC',
-        pink: '#EC4899',
-        lime: '#A3E635',
+        'brand-green': '#0BDA51',
+        'brand-orange': '#BE5103',
+        white: '#FFFFFF',
       },
       fontFamily: {
-        display: ['Space Grotesk', 'sans-serif'],
-        body: ['Manrope', 'sans-serif'],
+        display: ['Cocogoose Pro', 'Cocogoose', 'Inter', 'sans-serif'],
+        body: ['Inter', 'DM Sans', 'Geist', 'sans-serif'],
       },
       animation: {
         float: 'float 6s ease-in-out infinite',

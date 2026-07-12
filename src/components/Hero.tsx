@@ -6,6 +6,7 @@ const HERO_IMAGE = '/assets/images/hero%20image.jpeg';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -15,38 +16,54 @@ export default function Hero() {
 
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.96]);
   const heroContentY = useTransform(scrollYProgress, [0, 0.3], [0, 8]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const parallaxEnabled = !shouldReduceMotion && isDesktop;
 
   useEffect(() => {
     setMounted(true);
+    const updateViewport = () => setIsDesktop(window.innerWidth >= 768);
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
   }, []);
 
   return (
     <motion.section ref={heroRef} className="relative h-screen min-h-screen w-full overflow-hidden overflow-x-hidden bg-black" style={{ opacity: heroOpacity }}>
       <div className="absolute inset-0 overflow-hidden">
-        <motion.img
-          src={HERO_IMAGE}
-          alt="Creative community background"
-          className="absolute inset-0 h-full w-full object-cover block lg:hidden"
-          style={{ objectPosition: 'center 35%' }}
-          initial={shouldReduceMotion ? undefined : { scale: 1.0, transformOrigin: 'center center' }}
-          animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.06, 1.08, 1.06, 1.0] }}
-          transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
-        />
-        <motion.video
-          className="absolute inset-0 h-full w-full object-cover hidden lg:block"
-          style={{ objectPosition: 'center 35%' }}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={HERO_IMAGE}
-          initial={shouldReduceMotion ? undefined : { scale: 1.0, transformOrigin: 'center center' }}
-          animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.06, 1.08, 1.06, 1.0] }}
-          transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
+        <motion.div
+          className="absolute inset-[-6%] will-change-transform"
+          style={{
+            y: parallaxEnabled ? backgroundY : 0,
+            scale: parallaxEnabled ? backgroundScale : 1,
+            transform: 'translate3d(0,0,0)',
+          }}
         >
-          <source src="/assets/video/hero.mp4" type="video/mp4" />
-          <img src={HERO_IMAGE} alt="Creative community background" className="h-full w-full object-cover" />
-        </motion.video>
+          <motion.img
+            src={HERO_IMAGE}
+            alt="Creative community background"
+            className="absolute inset-0 h-full w-full object-cover block lg:hidden"
+            style={{ objectPosition: 'center 35%' }}
+            initial={shouldReduceMotion ? undefined : { scale: 1.0, transformOrigin: 'center center' }}
+            animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.06, 1.08, 1.06, 1.0] }}
+            transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
+          />
+          <motion.video
+            className="absolute inset-0 h-full w-full object-cover hidden lg:block"
+            style={{ objectPosition: 'center 35%' }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={HERO_IMAGE}
+            initial={shouldReduceMotion ? undefined : { scale: 1.0, transformOrigin: 'center center' }}
+            animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.06, 1.08, 1.06, 1.0] }}
+            transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
+          >
+            <source src="/assets/video/hero.mp4" type="video/mp4" />
+            <img src={HERO_IMAGE} alt="Creative community background" className="h-full w-full object-cover" />
+          </motion.video>
+        </motion.div>
         
         {/* Dark overlay for contrast */}
         <div className="absolute inset-0 bg-black" style={{ opacity: 0.58 }} />
@@ -65,19 +82,20 @@ export default function Hero() {
         <div className="flex h-full w-full items-center" style={{ paddingTop: '72px' }}>
           <motion.div
             className="w-full px-6"
-            style={{ maxWidth: 'none', paddingBottom: '120px' }}
             initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
             animate={mounted && !shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: 'easeOut' }}
-            style={{ y: heroContentY }}
+            style={{ y: heroContentY, maxWidth: 'none', paddingBottom: '120px' }}
           >
             <div className="mb-3 text-[12px] font-medium uppercase tracking-[0.12em] text-white/75">
               Creatives Lunch
             </div>
             <h1
-              className="font-display font-black leading-[0.9] text-white mb-6"
+              className="font-display font-black text-white mb-6"
               style={{
-                fontSize: 'clamp(56px, 13.2vw, 64px)',
+                fontSize: 'clamp(38px, 7vw, 72px)',
+                lineHeight: 0.9,
+                letterSpacing: '-0.035em',
                 maxWidth: '95vw',
                 textShadow: '0 4px 20px rgba(0, 0, 0, 0.35)',
               }}
@@ -100,8 +118,8 @@ export default function Hero() {
             <div className="flex flex-col items-start gap-4">
               <a
                 href="#membership"
-                className="premium-cta inline-flex h-12 items-center justify-center gap-2 rounded-full px-8 py-0 text-sm font-semibold text-white"
-                style={{ width: '232px' }}
+                className="glow-button glow-button--primary bg-brand-green inline-flex h-10 items-center justify-center gap-2 rounded-full px-4 py-0 text-xs font-semibold text-white transition-all duration-300"
+                style={{ width: '116px' }}
               >
                 Become a Member
                 <ArrowRight size={16} />

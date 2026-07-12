@@ -76,7 +76,7 @@ export default function Nav() {
             <div className="hidden lg:flex items-center">
               <a
                 href="#membership"
-                className={`${scrolled ? 'bg-ink text-cream' : 'bg-white text-black'} premium-cta font-display font-semibold text-sm h-12 px-6 rounded-full inline-flex items-center justify-center transition-all duration-200 hover:shadow-md`}
+                className={`${scrolled ? 'bg-brand-green text-white' : 'bg-brand-green text-white'} premium-cta glow-button glow-button--primary font-display font-semibold text-sm h-12 px-6 rounded-full inline-flex items-center justify-center transition-all duration-200 hover:shadow-lg`}
               >
                 Become a Member
               </a>
@@ -86,27 +86,38 @@ export default function Nav() {
       </div>
 
       {/* Mobile menu */}
-      {open && (
-        <div className="md:hidden bg-cream border-t border-ink/10 px-6 py-4 flex flex-col gap-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="font-body font-medium text-ink text-base"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#membership"
-            onClick={() => setOpen(false)}
-            className="bg-ink text-cream font-display font-semibold text-sm px-5 py-3 rounded-full text-center mt-2"
-          >
-            Join the Club
-          </a>
+      <div
+        className={`md:hidden fixed inset-x-0 top-[72px] z-40 px-4 pb-6 pt-2 transition-all duration-300 ease-out ${
+          open ? 'translate-x-0 opacity-100 pointer-events-auto' : '-translate-x-3 opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="rounded-[24px] border border-white/60 bg-white/70 px-4 py-4 shadow-[0_18px_60px_rgba(0,0,0,0.14)] backdrop-blur-xl">
+          <div className="flex flex-col">
+            {navLinks.map((link, index) => (
+              <div key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between rounded-2xl px-2 py-3 text-[15px] font-medium tracking-[0.01em] text-ink/90 transition-colors duration-200 hover:bg-white/70 hover:text-ink"
+                >
+                  <span>{link.label}</span>
+                </a>
+                {index < navLinks.length - 1 && <div className="h-px bg-ink/8" />}
+              </div>
+            ))}
+
+            <div className="mt-4 border-t border-ink/10 pt-4">
+              <a
+                href="#membership"
+                onClick={() => setOpen(false)}
+                className="glow-button glow-button--primary bg-brand-green inline-flex h-9 w-fit items-center justify-center rounded-full px-4 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]"
+              >
+                Become a Member
+              </a>
+            </div>
+          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

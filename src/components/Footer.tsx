@@ -35,7 +35,7 @@ export default function Footer() {
         {!shouldReduce && stars.map((star) => (
           <motion.div
             key={star.id}
-            className="star-dot absolute w-1 h-1 bg-accent-yellow rounded-full"
+            className="star-dot absolute w-1 h-1 bg-brand-green rounded-full"
             style={{ top: star.top, left: star.left }}
             animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{
@@ -54,13 +54,13 @@ export default function Footer() {
         <div className="grid lg:grid-cols-2 gap-12 mb-20 pb-16 border-b border-cream/10">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-9 h-9 bg-accent-yellow rounded-full flex items-center justify-center">
+              <div className="w-9 h-9 bg-brand-green rounded-full flex items-center justify-center">
                 <div className="w-3.5 h-3.5 bg-charcoal rounded-full" />
               </div>
               <span className="font-display font-bold text-cream text-xl tracking-tight">Creatives Lunch</span>
             </div>
 
-            <h2 className="font-display font-bold text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] text-cream mb-6">
+            <h2 className="font-display font-bold text-[clamp(2rem,4.2vw,3.1rem)] leading-[0.95] tracking-[-0.03em] text-cream mb-6">
               Pull up a chair.<br />
               <span className="accent-yellow">You belong here.</span>
             </h2>

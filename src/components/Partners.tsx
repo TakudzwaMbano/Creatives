@@ -1,10 +1,10 @@
 import { motion, useReducedMotion } from 'framer-motion';
 
 const stats = [
-  { number: '1,200+', label: 'Active Members', color: 'bg-accent-yellow', glowColor: 'glow-yellow' },
-  { number: '12', label: 'Cities', color: 'bg-accent-cyan', glowColor: 'glow-cyan' },
-  { number: '480+', label: 'Events Hosted', color: 'bg-accent-lime', glowColor: 'glow-lime' },
-  { number: '50+', label: 'Partnerships', color: 'bg-accent-lavender', glowColor: 'glow-lavender' },
+  { number: '1,200+', label: 'Active Members', color: 'bg-brand-green', glowColor: 'glow-yellow' },
+  { number: '12', label: 'Cities', color: 'bg-brand-green', glowColor: 'glow-cyan' },
+  { number: '480+', label: 'Events Hosted', color: 'bg-brand-green', glowColor: 'glow-lime' },
+  { number: '50+', label: 'Partnerships', color: 'bg-brand-orange', glowColor: 'glow-lavender' },
 ];
 
 export default function Partners() {

@@ -1,80 +1,65 @@
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Briefcase, Check, Sparkles, Users } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const tiers = [
   {
-    name: 'Community Member',
-    price: 'Free',
-    period: '',
-    accent: 'bg-accent-lime',
-    textAccent: 'text-charcoal',
-    glowColor: 'glow-lime',
-    description: 'Get started and explore the community.',
+    name: 'Community Membership',
+    price: '$10',
+    period: '/month',
+    accent: 'bg-brand-green',
+    textAccent: 'text-white',
+    glowColor: 'glow-yellow',
+    description: 'A welcoming entry point into the creative community.',
     perks: [
-      'Access to public events',
-      'Community forum',
-      'Monthly newsletter',
-      'Digital member card',
+      'General membership',
+      'Access to community updates',
+      'Access to selected events',
+      'Access to the community of creatives',
+      'Event discounts',
+      'Discounted Membership NFC Card',
     ],
-    cta: 'Join Free',
+    cta: 'Join Community',
     featured: false,
     floatDelay: 0,
+    icon: Users,
   },
   {
-    name: 'Active Member',
+    name: 'Active Membership',
     price: '$15',
-    period: '/mo',
-    accent: 'bg-accent-yellow',
-    textAccent: 'text-charcoal',
+    period: '/month',
+    accent: 'bg-brand-green',
+    textAccent: 'text-white',
     glowColor: 'glow-yellow',
-    description: 'Full access for serious creatives.',
+    description: 'The most complete membership for active creatives and collaborators.',
     perks: [
-      'Everything in Community',
-      'Priority event booking',
-      'Members-only workshops',
-      'Creative directory listing',
-      'Collaboration board access',
+      'Everything included in Community Membership',
+      'Access to the sponsors\' community',
+      'Access to sponsor service discounts',
+      'Free Membership NFC Card',
     ],
-    cta: 'Become a Member',
+    cta: 'Become Active',
     featured: true,
     floatDelay: 0.2,
+    icon: Sparkles,
   },
   {
-    name: 'Student Member',
-    price: '$5',
-    period: '/mo',
-    accent: 'bg-accent-cyan',
-    textAccent: 'text-charcoal',
-    glowColor: 'glow-cyan',
-    description: 'Affordable access for students.',
+    name: "Sponsor's Membership",
+    price: 'Contact Us',
+    period: '',
+    accent: 'bg-brand-orange',
+    textAccent: 'text-white',
+    glowColor: 'glow-lavender',
+    description: 'Custom access for brands and partners seeking deeper collaboration.',
     perks: [
-      'Everything in Active',
-      'Discounted event tickets',
-      'Student mentorship program',
-      'Portfolio review sessions',
+      'Branding and advertising opportunities',
+      'Event collaboration opportunities',
+      'Access to the creative network',
+      'Brand mentions across our social media platforms',
     ],
-    cta: 'Student Access',
+    cta: 'Contact Us',
     featured: false,
     floatDelay: 0.1,
-  },
-  {
-    name: 'Partner Member',
-    price: 'Custom',
-    period: '',
-    accent: 'bg-accent-lavender',
-    textAccent: 'text-charcoal',
-    glowColor: 'glow-lavender',
-    description: 'For studios, agencies, and brands.',
-    perks: [
-      'Everything in Active',
-      'Brand spotlight features',
-      'Co-host events',
-      'Talent network access',
-      'Dedicated account manager',
-    ],
-    cta: 'Talk to Us',
-    featured: false,
-    floatDelay: 0.15,
+    icon: Briefcase,
   },
 ];
 
@@ -98,9 +83,9 @@ export default function Membership() {
             <span className="w-6 h-px bg-cream/30 inline-block mr-2 align-middle" />
             Membership
           </span>
-          <h2 className="font-display font-bold text-cream text-[clamp(2.2rem,5vw,3.8rem)] leading-[1.05]">
+          <h2 className="font-display font-bold text-cream text-[clamp(2.1rem,4.3vw,3.3rem)] leading-[0.95] tracking-[-0.03em]">
             Pick your seat at<br />the
-            <span className="bg-accent-yellow text-charcoal px-3 ml-2 -skew-x-2 inline-block">table.</span>
+            <span className="bg-brand-green text-white px-3 ml-2 -skew-x-2 inline-block">table.</span>
           </h2>
           <p className="font-body text-cream/50 text-base leading-relaxed mt-6">
             Whether you're just getting started or ready to go deep — there's a membership for you. No lock-ins. Cancel anytime.
@@ -108,86 +93,84 @@ export default function Membership() {
         </motion.div>
 
         {/* Cards with floating animations */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {tiers.map((tier) => (
-            <motion.div
-              key={tier.name}
-              className={`relative rounded-3xl overflow-hidden flex flex-col backdrop-blur-sm transition-all duration-300 group ${
-                tier.featured
-                  ? 'lg:scale-105 z-10'
-                  : ''
-              }`}
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-              }}
-              initial={shouldReduce ? undefined : { opacity: 0, y: 40 }}
-              whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              animate={shouldReduce ? undefined : {
-                y: tier.featured ? [-8, 8] : [-6, 6],
-              }}
-              transition={{
-                opacity: { duration: 0.6, delay: tier.floatDelay, ease: 'easeOut' },
-                y: {
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                  duration: tier.featured ? 5 : 6,
-                },
-              }}
-              whileHover={shouldReduce ? undefined : { y: -12 }}
-            >
-              {/* Accent glow background */}
-              <div
-                className={`absolute -inset-1 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 ${tier.accent}`}
-                style={{ pointerEvents: 'none' }}
-              />
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {tiers.map((tier) => {
+            const Icon = tier.icon;
+            return (
+              <motion.div
+                key={tier.name}
+                className={`group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.05] p-0 shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-sm transition-all duration-300 ${
+                  tier.featured ? 'z-10 scale-[1.01] lg:scale-105' : ''
+                }`}
+                initial={shouldReduce ? undefined : { opacity: 0, y: 30 }}
+                whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                animate={shouldReduce ? undefined : {
+                  y: tier.featured ? [-5, 5] : [-3, 3],
+                }}
+                transition={{
+                  opacity: { duration: 0.6, delay: tier.floatDelay, ease: 'easeOut' },
+                  y: {
+                    repeat: Infinity,
+                    repeatType: 'reverse',
+                    duration: tier.featured ? 5.2 : 6.2,
+                  },
+                }}
+                whileHover={shouldReduce ? undefined : { y: -8, scale: 1.01, boxShadow: '0 24px 70px rgba(0,0,0,0.32)' }}
+              >
+                <div className={`absolute -inset-1 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-20 ${tier.accent}`} style={{ pointerEvents: 'none' }} />
 
-              {/* Accent header */}
-              <div className={`${tier.accent} ${tier.glowColor} px-6 pt-6 pb-5 relative z-10`}>
-                {tier.featured && (
-                  <span className="inline-block bg-charcoal text-cream font-display font-bold text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider mb-3">
-                    Most Popular
-                  </span>
-                )}
-                <p className={`font-display font-bold text-xl ${tier.textAccent}`}>{tier.name}</p>
-                <div className="flex items-end gap-1 mt-2">
-                  <span className={`font-display font-bold text-3xl ${tier.textAccent}`}>{tier.price}</span>
-                  {tier.period && (
-                    <span className={`font-body text-sm ${tier.textAccent} opacity-60 mb-0.5`}>{tier.period}</span>
+                <div className={`${tier.accent} ${tier.glowColor} relative z-10 px-6 pb-6 pt-6`}>
+                  {tier.featured && (
+                    <span className="mb-3 inline-flex rounded-full border border-white/20 bg-charcoal/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cream">
+                      Most Popular
+                    </span>
                   )}
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-white shadow-lg shadow-black/10">
+                      <Icon size={18} strokeWidth={1.8} />
+                    </div>
+                    <div>
+                      <p className={`font-display text-xl font-semibold ${tier.textAccent}`}>{tier.name}</p>
+                      <div className="mt-1 flex items-end gap-1">
+                        <span className={`font-display text-3xl font-bold ${tier.textAccent}`}>{tier.price}</span>
+                        {tier.period && (
+                          <span className={`mb-0.5 font-body text-sm ${tier.textAccent} opacity-70`}>{tier.period}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Body */}
-              <div className="flex flex-col flex-1 p-6 relative z-10">
-                <p className="font-body text-sm text-cream/60 leading-relaxed mb-6">{tier.description}</p>
+                <div className="relative z-10 flex flex-1 flex-col p-6">
+                  <p className="mb-5 font-body text-sm leading-relaxed text-cream/65">{tier.description}</p>
 
-                <ul className="flex flex-col gap-3 mb-8 flex-1">
-                  {tier.perks.map((perk) => (
-                    <li key={perk} className="flex items-start gap-2.5">
-                      <span className={`w-4 h-4 ${tier.accent} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                        <Check size={9} className="text-charcoal" strokeWidth={3} />
-                      </span>
-                      <span className="font-body text-sm text-cream/70">{perk}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="mb-8 flex flex-1 flex-col gap-3">
+                    {tier.perks.map((perk) => (
+                      <li key={perk} className="flex items-start gap-2.5">
+                        <span className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full ${tier.accent}`}>
+                          <Check size={10} className="text-charcoal" strokeWidth={3} />
+                        </span>
+                        <span className="font-body text-sm leading-6 text-cream/75">{perk}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                <a
-                  href="#"
-                  className={`premium-cta w-full text-center font-display font-bold text-sm py-3.5 rounded-full flex items-center justify-center gap-2 transition-all duration-200 ${
-                    tier.featured
-                      ? `${tier.accent} ${tier.textAccent} hover:shadow-2xl`
-                      : `border border-cream/30 text-cream hover:bg-cream/10`
-                  }`}
-                >
-                  {tier.cta}
-                  <ArrowRight size={14} />
-                </a>
-              </div>
-            </motion.div>
-          ))}
+                  <a
+                    href="#"
+                    className={`premium-cta glow-button flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-center font-display text-sm font-semibold transition-all duration-200 ${
+                      tier.featured
+                        ? `${tier.accent} ${tier.textAccent} hover:shadow-2xl`
+                        : 'border border-cream/25 bg-white/[0.03] text-cream hover:bg-white/[0.08]'
+                    }`}
+                  >
+                    {tier.cta}
+                    <ArrowRight size={14} />
+                  </a>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.p
