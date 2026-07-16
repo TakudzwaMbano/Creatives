@@ -6,7 +6,7 @@ const testimonials = [
     quote: "Creatives Lunch gave me my first real community in the industry. I met my current creative partner at a photo walk brunch three years ago.",
     name: 'Amara Osei',
     role: 'Photographer & Visual Artist',
-    avatar: '/assets/images/image2.jpeg',
+    avatar: '/assets/images/WhatsApp Image 2026-07-15 at 9.29.55 PM.jpeg',
   },
   {
     quote: "There's nowhere else I've found this mix of talent, openness, and genuine support. It's not a competition — it's a collaboration.",

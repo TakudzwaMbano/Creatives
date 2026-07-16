@@ -138,8 +138,17 @@ export default function Footer() {
             </p>
             <ul className="flex flex-col gap-3">
               <li className="font-body text-sm text-cream/55">hello@creativeslunch.com</li>
-              <li className="font-body text-sm text-cream/55">+27 21 000 0000</li>
-              <li className="font-body text-sm text-cream/55">Cape Town, SA</li>
+              <li className="font-body text-sm text-cream/55">
+                <a
+                  href="https://wa.me/263716556815"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-cream/55 hover:text-cream transition-colors duration-200"
+                >
+                  WhatsApp: +263 71 655 6815
+                </a>
+              </li>
+              <li className="font-body text-sm text-cream/55">Bulawayo, Zimbabwe</li>
             </ul>
           </div>
         </div>

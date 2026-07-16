@@ -1,16 +1,12 @@
 import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Nav from './components/Nav';
-import Hero from './components/Hero';
-import About from './components/About';
-import FeaturedEvent from './components/FeaturedEvent';
-import Membership from './components/Membership';
-import Gallery from './components/Gallery';
-import Testimonials from './components/Testimonials';
-import Partners from './components/Partners';
-import Footer from './components/Footer';
-import Cursor from './components/Cursor';
+import Home from './pages/Home';
+import Events from './pages/Events';
 
 function App() {
+  const location = useLocation();
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -33,16 +29,11 @@ function App() {
 
   return (
     <div>
-      <Nav />
-      <Hero />
-      <About />
-      <FeaturedEvent />
-      <Membership />
-      <Gallery />
-      <Testimonials />
-      <Partners />
-      <Footer />
-      <Cursor />
+      {location.pathname !== '/events' && <Nav />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<Events />} />
+      </Routes>
     </div>
   );
 }

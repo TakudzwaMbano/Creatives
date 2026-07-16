@@ -57,11 +57,11 @@ export default function FeaturedEvent() {
             <div className="mb-8 flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2 text-cream/80">
                 <Calendar size={15} />
-                <span className="font-body text-sm">August 23–25, 2025</span>
+                <span className="font-body text-sm">22 August 2026</span>
               </div>
               <div className="flex items-center gap-2 text-cream/80">
                 <MapPin size={15} />
-                <span className="font-body text-sm">Cape Town, South Africa</span>
+                <span className="font-body text-sm">Bulawayo, Zimbabwe</span>
               </div>
             </div>
 

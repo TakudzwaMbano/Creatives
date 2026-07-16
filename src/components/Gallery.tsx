@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useReducedMotion, PanInfo, useScroll, useTransform, useMotionValue } from 'framer-motion';
 
 const images = [
-  { src: '/assets/images/302423.jpg', alt: 'Creative gathering' },
   { src: '/assets/images/302424.jpg', alt: 'Community workshop' },
   { src: '/assets/images/302425.jpg', alt: 'Studio session' },
   { src: '/assets/images/302427.jpg', alt: 'Event moment' },
@@ -150,7 +149,7 @@ export default function Gallery() {
                 <motion.div
                   key={i}
                   ref={i === 0 ? cardRef : null}
-                  className="carousel-card rounded-[32px] overflow-hidden shadow-xl bg-black/5 flex-shrink-0"
+                  className="carousel-card rounded-[32px] overflow-hidden shadow-xl flex-shrink-0"
                   style={{
                     width: isMobile ? 'min(88vw, 420px)' : 'clamp(280px, 52vw, 720px)',
                     aspectRatio: '3/4',
@@ -164,12 +163,7 @@ export default function Gallery() {
                   <motion.div style={{ width: '100%', height: '100%', scale: combinedScale }}>
                     <div className="relative h-full w-full">
                       <img src={img.src} alt={img.alt} className="h-full w-full object-cover" loading="lazy" />
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-5 py-5 text-cream sm:px-6 sm:py-6">
-                        <blockquote className="max-w-[70%] font-display text-lg font-bold leading-snug sm:text-xl lg:text-2xl">
-                          “The best place to meet creatives.”
-                        </blockquote>
-                        <div className="mt-2 text-sm opacity-90">— Creatives Lunch Member</div>
-                      </div>
+
                     </div>
                   </motion.div>
                 </motion.div>
