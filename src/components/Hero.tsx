@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
-const HERO_IMAGE = '/assets/images/hero%20image.jpeg';
+const HERO_IMAGE_1 = '/assets/images/hero%20image.jpeg';
+const HERO_IMAGE_2 = '/assets/images/hero2.jpeg';
+const HERO_IMAGES = [HERO_IMAGE_1, HERO_IMAGE_2];
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLElement | null>(null);
   const { scrollYProgress } = useScroll({
@@ -28,6 +31,23 @@ export default function Hero() {
     return () => window.removeEventListener('resize', updateViewport);
   }, []);
 
+  useEffect(() => {
+    HERO_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+
+    const interval = window.setInterval(() => {
+      setCurrentSlide((current) => (current + 1) % HERO_IMAGES.length);
+    }, 4500);
+
+    return () => window.clearInterval(interval);
+  }, [shouldReduceMotion]);
+
   return (
     <motion.section ref={heroRef} className="relative h-screen min-h-screen w-full overflow-hidden overflow-x-hidden bg-black" style={{ opacity: heroOpacity }}>
       <div className="hero-background-shell absolute inset-0 overflow-hidden">
@@ -38,31 +58,23 @@ export default function Hero() {
             scale: parallaxEnabled ? backgroundScale : 1,
             transform: 'translate3d(0,0,0)',
           }}
+          initial={shouldReduceMotion ? undefined : { scale: 1.0 }}
+          animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.04, 1.08, 1.04, 1.0] }}
+          transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
         >
-          <motion.img
-            src={HERO_IMAGE}
-            alt="Creative community background"
-            className="absolute inset-0 h-full w-full object-cover block lg:hidden"
-            style={{ objectPosition: 'center 35%' }}
-            initial={shouldReduceMotion ? undefined : { scale: 1.0, transformOrigin: 'center center' }}
-            animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.06, 1.08, 1.06, 1.0] }}
-            transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
-          />
-          <motion.video
-            className="absolute inset-0 h-full w-full object-cover hidden lg:block"
-            style={{ objectPosition: 'center 35%' }}
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={HERO_IMAGE}
-            initial={shouldReduceMotion ? undefined : { scale: 1.0, transformOrigin: 'center center' }}
-            animate={shouldReduceMotion ? undefined : { scale: [1.0, 1.06, 1.08, 1.06, 1.0] }}
-            transition={shouldReduceMotion ? undefined : { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
-          >
-            <source src="/assets/video/hero.mp4" type="video/mp4" />
-            <img src={HERO_IMAGE} alt="Creative community background" className="h-full w-full object-cover" />
-          </motion.video>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currentSlide}
+              src={HERO_IMAGES[currentSlide]}
+              alt="Creative community background"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: 'center 35%' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2, ease: 'easeInOut' }}
+            />
+          </AnimatePresence>
         </motion.div>
 
         <div className="hero-base-overlay absolute inset-0" />
