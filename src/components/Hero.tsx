@@ -123,7 +123,9 @@ export default function Hero() {
             </p>
             <div className="flex flex-col items-start gap-4">
               <a
-                href="#membership"
+                href="https://wa.me/263716556815"
+                target="_blank"
+                rel="noreferrer noopener"
                 className="glow-button glow-button--primary bg-brand-green inline-flex h-10 items-center justify-center gap-2 rounded-full px-4 py-0 text-xs font-semibold text-white transition-all duration-300"
                 style={{ width: '116px' }}
               >

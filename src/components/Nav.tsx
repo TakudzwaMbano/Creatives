@@ -75,7 +75,9 @@ export default function Nav() {
           <div className="flex items-center gap-3">
             <div className="hidden lg:flex items-center">
               <a
-                href="#membership"
+                href="https://wa.me/263716556815"
+                target="_blank"
+                rel="noreferrer noopener"
                 className={`${scrolled ? 'bg-brand-green text-white' : 'bg-brand-green text-white'} premium-cta glow-button glow-button--primary font-display font-semibold text-sm h-12 px-6 rounded-full inline-flex items-center justify-center transition-all duration-200 hover:shadow-lg`}
               >
                 Become a Member
@@ -108,7 +110,9 @@ export default function Nav() {
 
             <div className="mt-4 border-t border-ink/10 pt-4">
               <a
-                href="#membership"
+                href="https://wa.me/263716556815"
+                target="_blank"
+                rel="noreferrer noopener"
                 onClick={() => setOpen(false)}
                 className="glow-button glow-button--primary bg-brand-green inline-flex h-9 w-fit items-center justify-center rounded-full px-4 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98]"
               >

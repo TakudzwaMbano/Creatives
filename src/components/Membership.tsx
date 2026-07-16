@@ -157,7 +157,9 @@ export default function Membership() {
                   </ul>
 
                   <a
-                    href="#"
+                    href="https://wa.me/263716556815"
+                    target="_blank"
+                    rel="noreferrer noopener"
                     className={`premium-cta glow-button flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-center font-display text-sm font-semibold transition-all duration-200 ${
                       tier.featured
                         ? `${tier.accent} ${tier.textAccent} hover:shadow-2xl`
