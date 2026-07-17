@@ -34,6 +34,8 @@ export default function Events() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set([0, 1, 2, 3]));
+  const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -59,6 +61,26 @@ export default function Events() {
   }, [selectedIndex]);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.dataset.index || '0');
+            setVisibleImages((prev) => new Set(prev).add(index));
+          }
+        });
+      },
+      { rootMargin: '200px', threshold: 0.01 }
+    );
+
+    imageRefs.current.forEach((img) => {
+      if (img) observer.observe(img);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -72,18 +94,18 @@ export default function Events() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const createStars = () => {
-      stars = Array.from({ length: 160 }, () => {
-        const radius = Math.random() * 1.4 + 0.5;
-        const brightness = 0.25 + Math.random() * 0.75;
+      stars = Array.from({ length: 80 }, () => {
+        const radius = Math.random() * 1.2 + 0.4;
+        const brightness = 0.3 + Math.random() * 0.7;
         return {
           x: Math.random() * width,
           y: Math.random() * height,
           radius,
           alpha: brightness,
-          driftX: (Math.random() * 0.03 + 0.005) * (Math.random() < 0.5 ? -1 : 1),
-          driftY: (Math.random() * 0.02 + 0.003) * (Math.random() < 0.5 ? -1 : 1),
+          driftX: (Math.random() * 0.02 + 0.004) * (Math.random() < 0.5 ? -1 : 1),
+          driftY: (Math.random() * 0.015 + 0.002) * (Math.random() < 0.5 ? -1 : 1),
           twinklePhase: Math.random() * Math.PI * 2,
-          twinkleSpeed: Math.random() * 0.015 + 0.003,
+          twinkleSpeed: Math.random() * 0.012 + 0.004,
         };
       });
     };
@@ -100,7 +122,6 @@ export default function Events() {
     const draw = (timestamp: number) => {
       ctx.clearRect(0, 0, width, height);
 
-      const baseBlur = 1.3;
       stars.forEach((star) => {
         star.x += star.driftX;
         star.y += star.driftY;
@@ -114,23 +135,21 @@ export default function Events() {
         const twinkle = 0.25 * Math.sin(star.twinklePhase) + 0.75;
         const alpha = star.alpha * twinkle;
 
-        const glow = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 8);
+        const glow = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.radius * 6);
         glow.addColorStop(0, `rgba(255,255,255,${alpha})`);
-        glow.addColorStop(0.55, `rgba(255,255,255,${alpha * 0.4})`);
+        glow.addColorStop(0.5, `rgba(255,255,255,${alpha * 0.3})`);
         glow.addColorStop(1, 'rgba(255,255,255,0)');
 
         ctx.fillStyle = glow;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius * 6, 0, Math.PI * 2);
+        ctx.arc(star.x, star.y, star.radius * 5, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.globalAlpha = alpha;
-        ctx.filter = `blur(${baseBlur * (star.radius / 1.5)}px)`;
         ctx.fillStyle = '#ffffff';
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.filter = 'none';
         ctx.globalAlpha = 1;
       });
 
@@ -193,12 +212,18 @@ export default function Events() {
               transition={{ duration: 0.25, ease: 'easeOut' }}
             >
               <div className={`relative overflow-hidden ${aspectVariants[index % aspectVariants.length]}`}>
-                <img
-                  src={image.src}
-                  alt="Event image"
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
+                {visibleImages.has(index) ? (
+                  <img
+                    ref={(el) => (imageRefs.current[index] = el)}
+                    data-index={index}
+                    src={image.src}
+                    alt="Event image"
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-gray-200 animate-pulse" />
+                )}
               </div>
             </motion.button>
           ))}

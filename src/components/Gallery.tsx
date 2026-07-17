@@ -42,13 +42,9 @@ export default function Gallery() {
   }, [trackScale, shadowOpacity, inactiveOpacity, combinedScale, combinedShadow, combinedInactiveOpacity]);
 
   useEffect(() => {
-    let raf = 0;
-    const tick = () => {
+    const handleScroll = () => {
       const el = sectionRef.current;
-      if (!el) {
-        raf = requestAnimationFrame(tick);
-        return;
-      }
+      if (!el) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
       const progress = Math.min(Math.max((vh - rect.top) / (rect.height + vh), 0), 1);
@@ -59,10 +55,22 @@ export default function Gallery() {
       const inactiveVal = 0.4 + t * (0.6 - 0.4);
       combinedShadow.set(shadowVal);
       combinedInactiveOpacity.set(inactiveVal);
-      raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, [combinedScale, combinedShadow, combinedInactiveOpacity]);
 
   const measure = useCallback(() => {
