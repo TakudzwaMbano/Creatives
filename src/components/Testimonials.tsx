@@ -22,13 +22,13 @@ const testimonials = [
   },
   {
     quote: "I actually can't get over how much fun we had today, and those cards!!! Genius, it was so amazing to hear everyone's answers because they really do give you courage and inspiration, so they should 100% stay. Next time though, we all have so many questions for you! But really, I feel like I found my community, we all just clicked, only as we were leaving did anyone remember to ask names. I can see how this can grow into something very special, and I wanted to thank you — even my shy antisocial partner Dmitry is telling his mates about how cool it was.",
-    name: 'Takudzwa Mbano',
+    name: 'Shawnee',
     role: 'Community Member',
     avatar: '/assets/images/302425.jpg',
   },
   {
     quote: "Creatives Lunch hosted another Creatives on the Move outing at Hillside Dams, and it was such a great experience! We hiked 4.1 km with a bit of jogging along the way, and it was totally worth it. The good vibes, laughter, and connections made the day even more special. I love how this initiative brings creatives together to connect, grow, and have fun. If you've been thinking about joining, this is your sign. See you at the next outing!",
-    name: 'Shawnee',
+    name: 'Miss Maggie Bones',
     role: 'Event Attendee',
     avatar: '/assets/images/302424.jpg',
   },
