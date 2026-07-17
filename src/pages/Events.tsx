@@ -65,7 +65,7 @@ export default function Events() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = parseInt(entry.target.dataset.index || '0');
+            const index = parseInt((entry.target as HTMLElement).dataset.index || '0');
             setVisibleImages((prev) => new Set(prev).add(index));
           }
         });
@@ -119,7 +119,7 @@ export default function Events() {
       createStars();
     };
 
-    const draw = (timestamp: number) => {
+    const draw = (_timestamp: number) => {
       ctx.clearRect(0, 0, width, height);
 
       stars.forEach((star) => {
@@ -220,6 +220,7 @@ export default function Events() {
                     alt="Event image"
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="h-full w-full bg-gray-200 animate-pulse" />

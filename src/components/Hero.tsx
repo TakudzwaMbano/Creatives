@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
-const HERO_IMAGE_1 = '/assets/images/new hero image 1.jpeg';
-const HERO_IMAGE_2 = '/assets/images/new hero image 2.jpeg';
-const HERO_IMAGES = [HERO_IMAGE_1, HERO_IMAGE_2];
+const HERO_IMAGES = [
+  '/assets/images/hero-carousel-1.jpeg',
+  '/assets/images/hero-carousel-2.jpeg',
+  '/assets/images/hero-carousel-3.jpeg',
+  '/assets/images/hero-carousel-4.jpeg',
+];
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -93,7 +96,6 @@ export default function Hero() {
                 style={{ objectPosition: 'center 35%' }}
                 loading="eager"
                 decoding="async"
-                importance="high"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
