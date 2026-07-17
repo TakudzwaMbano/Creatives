@@ -10,15 +10,6 @@ const images = Object.entries(imageModules)
   .map(([path, src]) => ({ src, fileName: path.split('/').pop() ?? '' }))
   .sort((a, b) => a.fileName.localeCompare(b.fileName));
 
-const aspectVariants = [
-  'aspect-[4/5]',
-  'aspect-[3/4]',
-  'aspect-[5/6]',
-  'aspect-[16/10]',
-  'aspect-[7/8]',
-  'aspect-[9/12]',
-];
-
 interface Star {
   x: number;
   y: number;
@@ -34,8 +25,7 @@ export default function Events() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set([0, 1, 2, 3]));
-  const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -60,25 +50,9 @@ export default function Events() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [selectedIndex]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt((entry.target as HTMLElement).dataset.index || '0');
-            setVisibleImages((prev) => new Set(prev).add(index));
-          }
-        });
-      },
-      { rootMargin: '200px', threshold: 0.01 }
-    );
-
-    imageRefs.current.forEach((img) => {
-      if (img) observer.observe(img);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -201,31 +175,29 @@ export default function Events() {
       </button>
 
       <div className="mx-auto max-w-[1700px] px-4 pb-20 pt-24 sm:px-6 lg:px-8">
-        <div className="columns-1 gap-8 sm:columns-2 xl:columns-3 2xl:columns-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {images.map((image, index) => (
             <motion.button
               key={image.fileName}
               type="button"
               onClick={() => setSelectedIndex(index)}
-              className="group mb-8 inline-block w-full overflow-hidden rounded-[16px] border border-black/5 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_100px_rgba(15,23,42,0.12)]"
-              whileHover={{ scale: 1.005 }}
+              className="group relative overflow-hidden rounded-2xl border border-black/5 bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+              whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
+              style={{ aspectRatio: '4/3' }}
             >
-              <div className={`relative overflow-hidden ${aspectVariants[index % aspectVariants.length]}`}>
-                {visibleImages.has(index) ? (
-                  <img
-                    ref={(el) => (imageRefs.current[index] = el)}
-                    data-index={index}
-                    src={image.src}
-                    alt="Event image"
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <div className="h-full w-full bg-gray-200 animate-pulse" />
-                )}
-              </div>
+              {!loadedImages.has(index) && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+              )}
+              <img
+                src={image.src}
+                alt="Event image"
+                className={`h-full w-full object-cover transition duration-500 group-hover:scale-105 ${loadedImages.has(index) ? 'opacity-100' : 'opacity-0'}`}
+                loading={index < 8 ? 'eager' : 'lazy'}
+                decoding="async"
+                onLoad={() => handleImageLoad(index)}
+                onError={() => handleImageLoad(index)}
+              />
             </motion.button>
           ))}
         </div>
