@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Footer from '../components/Footer';
 
-const imageModules = import.meta.glob('../assets/images/WhatsApp Image*.jpeg', { eager: true, as: 'url' }) as Record<string, string>;
+const imageModules = import.meta.glob('../../public/assets/images/tinified/*.{jpeg,jpg,png,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
 
 const images = Object.entries(imageModules)
   .map(([path, src]) => ({ src, fileName: path.split('/').pop() ?? '' }))
@@ -272,3 +272,5 @@ export default function Events() {
     </main>
   );
 }
+
+
