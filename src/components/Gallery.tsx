@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const images = [
@@ -9,35 +9,21 @@ const images = [
   { src: '/assets/images/302429.jpg', alt: 'Member meetup' },
   { src: '/assets/images/302430.jpg', alt: 'Lifestyle gathering' },
   { src: '/assets/images/302431.jpg', alt: 'Inspiring scene' },
-  { src: '/assets/images/new hero image 1.jpeg', alt: 'Creative community' },
-  { src: '/assets/images/new hero image 2.jpeg', alt: 'Creative gathering' },
+  { src: '/assets/images/hero-old-1.jpeg', alt: 'Creative community' },
+  { src: '/assets/images/hero-old-2.jpeg', alt: 'Creative gathering' },
 ];
 
 export default function Gallery() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
-  const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const [showAll, setShowAll] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
   const shouldReduce = useReducedMotion();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = parseInt((entry.target as HTMLElement).dataset.index || '0');
-            setVisibleImages((prev) => new Set(prev).add(index));
-          }
-        });
-      },
-      { rootMargin: '200px', threshold: 0.01 }
-    );
+  const displayImages = showAll ? images : images.slice(0, 4);
 
-    imageRefs.current.forEach((img) => {
-      if (img) observer.observe(img);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index));
+  };
 
   return (
     <motion.section ref={sectionRef} id="gallery" className="bg-cream py-12 lg:py-20"
@@ -56,9 +42,9 @@ export default function Gallery() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {images.map((image, index) => (
+          {displayImages.map((image, index) => (
             <motion.div
-              key={index}
+              key={image.src}
               className="relative overflow-hidden rounded-2xl bg-gray-200 shadow-lg"
               initial={shouldReduce ? undefined : { opacity: 0, scale: 0.95 }}
               whileInView={shouldReduce ? undefined : { opacity: 1, scale: 1 }}
@@ -67,22 +53,46 @@ export default function Gallery() {
               whileHover={shouldReduce ? undefined : { scale: 1.02, y: -4 }}
               style={{ aspectRatio: '4/3' }}
             >
-              {visibleImages.has(index) ? (
-                <img
-                  ref={(el) => (imageRefs.current[index] = el)}
-                  data-index={index}
-                  src={image.src}
-                  alt={image.alt}
-                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <div className="h-full w-full bg-gray-200 animate-pulse" />
+              {!loadedImages.has(index) && (
+                <div className="absolute inset-0 bg-gray-200 animate-pulse" />
               )}
+              <img
+                src={image.src}
+                alt={image.alt}
+                className={`h-full w-full object-cover transition-transform duration-500 hover:scale-105 ${loadedImages.has(index) ? 'opacity-100' : 'opacity-0'}`}
+                loading={index < 4 ? 'eager' : 'lazy'}
+                decoding="async"
+                onLoad={() => handleImageLoad(index)}
+                onError={() => handleImageLoad(index)}
+              />
             </motion.div>
           ))}
         </div>
+
+        {images.length > 4 && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAll((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white px-6 py-3 text-sm font-semibold text-ink transition duration-300 ease-out hover:border-ink/20 hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ink/30"
+            >
+              <span>{showAll ? 'Show Less' : 'View All Gallery'}</span>
+              <svg
+                className="h-4 w-4 transition-transform duration-300"
+                style={{ transform: showAll ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
     </motion.section>
   );
