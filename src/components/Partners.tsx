@@ -66,6 +66,12 @@ export default function Partners() {
             Trusted by creative teams at
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+            <img
+              src="/assets/images/creatives-lunch-logo.jpeg"
+              alt="Creatives Lunch"
+              className="h-12 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity duration-200"
+              loading="lazy"
+            />
             {['Adobe', 'Figma', 'Behance', 'Canva', 'Dribbble', 'Unsplash', 'VSCO', 'Notion'].map((p) => (
               <span
                 key={p}

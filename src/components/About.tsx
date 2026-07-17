@@ -59,7 +59,19 @@ export default function About() {
                 A warm table, <span className="text-brand-green">built for bold ideas.</span>
               </h2>
               <p className="mt-5 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
-                Creatives Lunch began as a simple gathering of curious people who wanted more than networking. We created a place to connect, collaborate, and grow with intention — and that spirit still shapes every event we host.
+                CREATIVES LUNCH is a community where creative people come together to meet, learn, share ideas, and support one another. It is open to graphic designers, photographers, videographers, artists, musicians, web developers, content creators, performers, and anyone who enjoys being creative.
+              </p>
+              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                We believe that great ideas grow when people spend time together. That is why we create fun and meaningful events where creatives can learn new skills, build friendships, work together, and help each other succeed.
+              </p>
+              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                Our activities are not only about creativity. We also believe that a healthy mind needs a healthy body. Through different events, we encourage creatives to stay active, take care of themselves, and enjoy being part of a positive community.
+              </p>
+              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                We are grateful for the support and encouragement of respectable and influential people who believe that creatives deserve opportunities to grow. When leaders and community members stand with us, they help build a stronger, healthier, and more connected creative community.
+              </p>
+              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                Our first Creatives on the Move wellness event on 27 June 2026 was a great success and brought creatives together in a fun and healthy way. We are excited to continue this journey with more editions to come, and we look forward to welcoming even more creatives to join us.
               </p>
 
               <a

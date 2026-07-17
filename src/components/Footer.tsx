@@ -110,6 +110,9 @@ export default function Footer() {
                 <ArrowRight size={14} />
               </motion.button>
             </div>
+            <p className="font-body text-cream/30 text-xs mt-3">
+              Subscriptions send to hello@creativeslunch.com
+            </p>
           </div>
         </div>
 

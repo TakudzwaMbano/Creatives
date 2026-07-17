@@ -66,11 +66,13 @@ export default function FeaturedEvent() {
             </div>
 
             <p className="mb-10 max-w-lg text-base leading-relaxed font-body text-cream/70">
-              Three days of workshops, talks, exhibitions, and shared meals. A retreat for creatives who want to step away from screens and make something real together.
+              A day of creative talks, wellness activities and shared meals. A retreat for creatives who want to step away from screens and make something real together.
             </p>
 
             <a
-              href="#"
+              href="https://wa.me/263716556815?text=I%20want%20to%20join%20the%20next%20event"
+              target="_blank"
+              rel="noreferrer noopener"
               className="glow-button glow-button--primary inline-flex w-fit items-center gap-3 rounded-full bg-brand-green px-6 py-3 text-sm font-display font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl glow-yellow"
             >
               Reserve Your Spot

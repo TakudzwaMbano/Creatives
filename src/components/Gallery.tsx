@@ -2,15 +2,15 @@ import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const images = [
-  { src: '/assets/images/302424.jpg', alt: 'Community workshop' },
-  { src: '/assets/images/302425.jpg', alt: 'Studio session' },
-  { src: '/assets/images/302427.jpg', alt: 'Event moment' },
-  { src: '/assets/images/302428.jpg', alt: 'Creative collaboration' },
-  { src: '/assets/images/302429.jpg', alt: 'Member meetup' },
-  { src: '/assets/images/302430.jpg', alt: 'Lifestyle gathering' },
-  { src: '/assets/images/302431.jpg', alt: 'Inspiring scene' },
-  { src: '/assets/images/hero-old-1.jpeg', alt: 'Creative community' },
-  { src: '/assets/images/hero-old-2.jpeg', alt: 'Creative gathering' },
+  { src: '/assets/images/bush-1.jpeg', alt: 'Bush wellness activity' },
+  { src: '/assets/images/event-1.jpeg', alt: 'First event gathering' },
+  { src: '/assets/images/bush-2.jpeg', alt: 'Bush wellness hike' },
+  { src: '/assets/images/event-2.jpeg', alt: 'Event creative session' },
+  { src: '/assets/images/bush-3.jpeg', alt: 'Bush nature walk' },
+  { src: '/assets/images/event-3.jpeg', alt: 'Event collaboration' },
+  { src: '/assets/images/bush-4.jpeg', alt: 'Bush group activity' },
+  { src: '/assets/images/event-4.jpeg', alt: 'Event networking' },
+  { src: '/assets/images/bush-5.jpeg', alt: 'Bush wellness retreat' },
 ];
 
 export default function Gallery() {
