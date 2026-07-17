@@ -33,6 +33,8 @@ export default function About() {
                   src="/assets/images/OUR%20STORY.jpg"
                   alt="Creatives Lunch community"
                   className="h-[320px] w-full object-cover sm:h-[420px]"
+                  loading="lazy"
+                  decoding="async"
                   initial={shouldReduce ? undefined : { scale: 1.02, opacity: 0.95 }}
                   whileInView={shouldReduce ? undefined : { scale: 1, opacity: 1 }}
                   viewport={{ once: true, amount: 0.25 }}

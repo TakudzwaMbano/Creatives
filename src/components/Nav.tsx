@@ -52,6 +52,8 @@ export default function Nav() {
                 alt="Creatives Lunch logo"
                 className="object-contain"
                 style={{ width: '44px', height: '44px' }}
+                loading="lazy"
+                decoding="async"
               />
             </a>
           </div>

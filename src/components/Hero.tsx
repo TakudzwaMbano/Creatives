@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
-const HERO_IMAGE_1 = '/assets/images/hero%20image.jpeg';
-const HERO_IMAGE_2 = '/assets/images/hero2.jpeg';
+const HERO_IMAGE_1 = '/assets/images/new hero image 1.jpeg';
+const HERO_IMAGE_2 = '/assets/images/new hero image 2.jpeg';
 const HERO_IMAGES = [HERO_IMAGE_1, HERO_IMAGE_2];
 
 export default function Hero() {
@@ -69,6 +69,9 @@ export default function Hero() {
               alt="Creative community background"
               className="absolute inset-0 h-full w-full object-cover"
               style={{ objectPosition: 'center 35%' }}
+              loading="eager"
+              decoding="async"
+              importance="high"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
