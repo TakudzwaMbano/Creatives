@@ -13,6 +13,12 @@ const testimonials = [
     role: 'Event Attendee',
     avatar: '/assets/images/miss-maggie-avatar.jpeg',
   },
+  {
+    quote: "The Creatives community is full of fun people, and I love the vibe, the running, the food and also the relationships we are building. I am definitely going to be a member for a very long time.",
+    name: 'Thabo Nyoni',
+    role: 'EkasiKulture Brand Owner',
+    avatar: '/assets/images/thabo-avatar.jpeg',
+  },
 ];
 
 export default function Testimonials() {
@@ -45,7 +51,7 @@ export default function Testimonials() {
           </h2>
         </motion.div>
 
-        <motion.div layout className="grid gap-6 md:grid-cols-2 lg:gap-8">
+        <motion.div layout className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}

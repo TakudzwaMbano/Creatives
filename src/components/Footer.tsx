@@ -23,6 +23,7 @@ export default function Footer() {
 
   return (
     <motion.footer
+      id="contact"
       className="relative pt-20 pb-10 overflow-hidden"
       style={{ backgroundColor: '#111111' }}
       initial={shouldReduce ? undefined : 'hidden'}
