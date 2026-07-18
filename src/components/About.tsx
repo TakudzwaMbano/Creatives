@@ -1,8 +1,10 @@
-﻿import { ArrowUpRight } from 'lucide-react';
-import { motion, useReducedMotion } from 'framer-motion';
+﻿import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 
 export default function About() {
   const shouldReduce = useReducedMotion();
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <motion.section
@@ -64,19 +66,43 @@ export default function About() {
               <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
                 We believe that great ideas grow when people spend time together. That is why we create fun and meaningful events where creatives can learn new skills, build friendships, work together, and help each other succeed.
               </p>
-              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
-                Our activities are not only about creativity. We also believe that a healthy mind needs a healthy body. Through different events, we encourage creatives to stay active, take care of themselves, and enjoy being part of a positive community.
-              </p>
-              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
-                We are grateful for the support and encouragement of respectable and influential people who believe that creatives deserve opportunities to grow. When leaders and community members stand with us, they help build a stronger, healthier, and more connected creative community.
-              </p>
-              <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
-                Our first Creatives on the Move wellness event on 27 June 2026 was a great success and brought creatives together in a fun and healthy way. We are excited to continue this journey with more editions to come, and we look forward to welcoming even more creatives to join us.
-              </p>
+
+              <AnimatePresence initial={false}>
+                {expanded && (
+                  <motion.div
+                    initial={shouldReduce ? undefined : { opacity: 0, height: 0 }}
+                    animate={shouldReduce ? undefined : { opacity: 1, height: 'auto' }}
+                    exit={shouldReduce ? undefined : { opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                  >
+                    <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                      Our activities are not only about creativity. We also believe that a healthy mind needs a healthy body. Through different events, we encourage creatives to stay active, take care of themselves, and enjoy being part of a positive community.
+                    </p>
+                    <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                      We are grateful for the support and encouragement of respectable and influential people who believe that creatives deserve opportunities to grow. When leaders and community members stand with us, they help build a stronger, healthier, and more connected creative community.
+                    </p>
+                    <p className="mt-4 max-w-2xl font-body text-base leading-relaxed text-ink/65 sm:text-[17px]">
+                      Our first Creatives on the Move wellness event on 27 June 2026 was a great success and brought creatives together in a fun and healthy way. We are excited to continue this journey with more editions to come, and we look forward to welcoming even more creatives to join us.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <button
+                type="button"
+                onClick={() => setExpanded(!expanded)}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-green hover:text-brand-green/80 transition-colors duration-200"
+              >
+                {expanded ? 'View Less' : 'View More'}
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+                />
+              </button>
 
               <a
                 href="#membership"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-ink/12 bg-white/85 px-4 py-2 font-display text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                className="mt-4 inline-flex items-center gap-2 rounded-full border border-ink/12 bg-white/85 px-4 py-2 font-display text-sm font-semibold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
               >
                 Discover the community <ArrowUpRight size={14} />
               </a>
