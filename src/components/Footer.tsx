@@ -3,9 +3,9 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { sectionVariant, staggerChildren } from '../motion/variants';
 
 const footerNav = {
-  Community: ['About Us', 'Events', 'Gallery', 'Blog', 'Podcast'],
+  Community: ['About Us', 'Events', 'Gallery'],
   Membership: ['Community Member', 'Active Member', 'Student Member', 'Partner Member'],
-  Connect: ['Contact', 'Press', 'Partnerships', 'Careers'],
+  Connect: ['Contact'],
 };
 
 export default function Footer() {
@@ -163,11 +163,6 @@ export default function Footer() {
             <motion.p className="font-body text-xs text-cream/30" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
               © {new Date().getFullYear()} Creatives Lunch. All rights reserved.
             </motion.p>
-            <motion.div className="flex items-center gap-6" variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transition: { staggerChildren: 0.08 } } }}>
-              <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Privacy</motion.a>
-              <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Terms</motion.a>
-              <motion.a href="#" className="font-body text-xs text-cream/30 hover:text-cream/60 transition-colors duration-200" variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}>Cookies</motion.a>
-            </motion.div>
           </div>
 
           <motion.div
