@@ -2,9 +2,9 @@ import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 const images = [
-  { src: '/assets/images/bush-1.jpeg', alt: 'Bush wellness activity' },
-  { src: '/assets/images/event-1.jpeg', alt: 'First event gathering' },
-  { src: '/assets/images/bush-2.jpeg', alt: 'Bush wellness hike' },
+  { src: '/assets/images/gallery-new-1.jpeg', alt: 'Gallery photo 1' },
+  { src: '/assets/images/gallery-new-2.jpeg', alt: 'Gallery photo 2' },
+  { src: '/assets/images/gallery-new-3.jpeg', alt: 'Gallery photo 3' },
   { src: '/assets/images/event-2.jpeg', alt: 'Event creative session' },
   { src: '/assets/images/bush-3.jpeg', alt: 'Bush nature walk' },
   { src: '/assets/images/event-3.jpeg', alt: 'Event collaboration' },

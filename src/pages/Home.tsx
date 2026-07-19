@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Nav from '../components/Nav';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import FeaturedEvent from '../components/FeaturedEvent';
@@ -9,6 +8,7 @@ import Testimonials from '../components/Testimonials';
 import Partners from '../components/Partners';
 import Footer from '../components/Footer';
 import Cursor from '../components/Cursor';
+import Countdown from '../components/Countdown';
 
 export default function Home() {
   useEffect(() => {
@@ -33,6 +33,7 @@ export default function Home() {
 
   return (
     <>
+      <Countdown />
       <Hero />
       <About />
       <FeaturedEvent />
