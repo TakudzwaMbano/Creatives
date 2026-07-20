@@ -1,6 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-
-const LAUNCH_TIME = '2026-07-21T10:30:00+02:00';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import FeaturedEvent from '../components/FeaturedEvent';
@@ -12,9 +10,19 @@ import Footer from '../components/Footer';
 import Cursor from '../components/Cursor';
 import ComingSoon from '../components/ComingSoon';
 
+const LAUNCH_TIME = '2026-07-21T10:30:00+02:00';
+
 export default function Home() {
-  const [isComingSoonActive, setIsComingSoonActive] = useState(true);
-  const comingSoonTarget = useMemo(() => new Date(LAUNCH_TIME).getTime(), []);
+  const [now, setNow] = useState(() => Date.now());
+  const launchTime = useMemo(() => new Date(LAUNCH_TIME).getTime(), []);
+  const shouldShowComingSoon = now < launchTime;
+
+  useEffect(() => {
+    const tick = () => setNow(Date.now());
+    tick();
+    const interval = window.setInterval(tick, 1000);
+    return () => window.clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,8 +44,8 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
-  if (isComingSoonActive) {
-    return <ComingSoon targetTime={comingSoonTarget} onComplete={() => setIsComingSoonActive(false)} />;
+  if (shouldShowComingSoon) {
+    return <ComingSoon targetTime={launchTime} />;
   }
 
   return (
