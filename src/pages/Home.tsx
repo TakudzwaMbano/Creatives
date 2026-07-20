@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import FeaturedEvent from '../components/FeaturedEvent';
@@ -8,9 +8,12 @@ import Testimonials from '../components/Testimonials';
 import Partners from '../components/Partners';
 import Footer from '../components/Footer';
 import Cursor from '../components/Cursor';
-import Countdown from '../components/Countdown';
+import ComingSoon from '../components/ComingSoon';
 
 export default function Home() {
+  const [isComingSoonActive, setIsComingSoonActive] = useState(true);
+  const comingSoonTarget = useMemo(() => Date.now() + 24 * 60 * 60 * 1000, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,9 +34,12 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  if (isComingSoonActive) {
+    return <ComingSoon targetTime={comingSoonTarget} onComplete={() => setIsComingSoonActive(false)} />;
+  }
+
   return (
     <>
-      <Countdown />
       <Hero />
       <About />
       <FeaturedEvent />
