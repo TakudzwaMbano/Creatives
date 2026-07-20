@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+
+const LAUNCH_TIME = '2026-07-21T10:30:00+02:00';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import FeaturedEvent from '../components/FeaturedEvent';
@@ -12,7 +14,7 @@ import ComingSoon from '../components/ComingSoon';
 
 export default function Home() {
   const [isComingSoonActive, setIsComingSoonActive] = useState(true);
-  const comingSoonTarget = useMemo(() => Date.now() + 24 * 60 * 60 * 1000, []);
+  const comingSoonTarget = useMemo(() => new Date(LAUNCH_TIME).getTime(), []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
