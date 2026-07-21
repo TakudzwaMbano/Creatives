@@ -112,7 +112,7 @@ export default function Footer() {
               </motion.button>
             </div>
             <p className="font-body text-cream/30 text-xs mt-3">
-              Subscriptions send to hello@creativeslunch.com
+              Subscriptions send to illustratedesignszw@gmail.com
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function Footer() {
               Get in Touch
             </p>
             <ul className="flex flex-col gap-3">
-              <li className="font-body text-sm text-cream/55">hello@creativeslunch.com</li>
+              <li className="font-body text-sm text-cream/55">illustratedesignszw@gmail.com</li>
               <li className="font-body text-sm text-cream/55">
                 <a
                   href="https://wa.me/263716556815"
