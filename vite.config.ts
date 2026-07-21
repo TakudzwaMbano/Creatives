@@ -8,14 +8,30 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.svg'],
       manifest: {
-        name: 'Creatives',
+        name: 'Creatives Lunch',
         short_name: 'Creatives',
-        description: 'A creative community where designers, photographers, artists, musicians, developers and makers connect.',
+        description: 'A premium creative community where designers, photographers, artists, musicians, developers and makers connect.',
         theme_color: '#0BDA51',
-        background_color: '#ffffff',
+        background_color: '#060606',
         display: 'standalone',
+        start_url: '/',
+        scope: '/',
+        icons: [
+          {
+            src: '/assets/images/logo.PNG',
+            sizes: '192x192',
+            type: 'image/png',
+            purpose: 'any',
+          },
+          {
+            src: '/assets/images/logo.PNG',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any',
+          },
+        ],
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp}'],

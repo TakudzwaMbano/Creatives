@@ -1,0 +1,22 @@
+{
+  "name": "Creatives Lunch",
+  "short_name": "Creatives",
+  "description": "A premium creative community for designers, photographers, musicians, artists, makers, and collaborators.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#060606",
+  "theme_color": "#0BDA51",
+  "icons": [
+    {
+      "src": "/assets/images/logo.PNG",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/logo.PNG",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
