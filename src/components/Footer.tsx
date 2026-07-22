@@ -1,6 +1,10 @@
 import { ArrowRight, Instagram, Twitter, Youtube, Linkedin } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useState } from 'react';
 import { sectionVariant, staggerChildren } from '../motion/variants';
+import { useCookie } from './CookieContext';
+import CookieBanner from './CookieBanner';
+import CookiePreferences from './CookiePreferences';
 
 const footerNav = {
   Community: ['About Us', 'Events', 'Gallery'],
@@ -10,6 +14,37 @@ const footerNav = {
 
 export default function Footer() {
   const shouldReduce = useReducedMotion();
+  const { openPreferences } = useCookie();
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  const ORG_EMAIL = 'illustratedesignszw@gmail.com';
+
+  function validateEmail(value: string) {
+    // Simple RFC 5322-ish email validation
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(value);
+  }
+
+  function handleSubscribe(e?: React.MouseEvent) {
+    if (e) e.preventDefault();
+    setError('');
+    if (!email) {
+      setError('Please enter your email address.');
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    const subject = encodeURIComponent('Newsletter Subscription');
+    const body = encodeURIComponent(`Hello,\n\nI would like to subscribe to your newsletter.\n\nMy email address is: ${email}\n\nThank you.`);
+    const mailto = `mailto:${ORG_EMAIL}?subject=${subject}&body=${body}`;
+
+    // Open the user's default mail client
+    window.location.href = mailto;
+  }
 
   // Animated stars
   const stars = [
@@ -22,7 +57,8 @@ export default function Footer() {
   ];
 
   return (
-    <motion.footer
+    <>
+      <motion.footer
       id="contact"
       className="relative pt-20 pb-10 overflow-hidden"
       style={{ backgroundColor: '#111111' }}
@@ -101,9 +137,14 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="your@email.com"
+                value={email}
+                onChange={(ev) => setEmail(ev.target.value)}
                 className="flex-1 bg-cream/5 border border-cream/20 rounded-full px-5 py-3.5 font-body text-sm text-cream placeholder-cream/30 focus:outline-none focus:border-accent-yellow transition-colors duration-200"
+                aria-label="Email address"
               />
               <motion.button
+                type="button"
+                onClick={handleSubscribe}
                 className="bg-accent-yellow text-charcoal font-display font-bold text-sm px-6 py-3.5 rounded-full flex items-center justify-center gap-2 whitespace-nowrap glow-yellow"
                 whileHover={shouldReduce ? undefined : { scale: 1.05 }}
               >
@@ -114,6 +155,11 @@ export default function Footer() {
             <p className="font-body text-cream/30 text-xs mt-3">
               Subscriptions send to illustratedesignszw@gmail.com
             </p>
+            {error && (
+              <p className="mt-2 text-xs text-cream/60" role="alert" aria-live="polite">
+                {error}
+              </p>
+            )}
           </div>
         </div>
 
@@ -168,8 +214,12 @@ export default function Footer() {
           >
             © {new Date().getFullYear()} Creatives Lunch. All rights reserved.
           </motion.p>
+          <button onClick={() => openPreferences()} className="text-cream/40 text-xs underline">Cookie Settings</button>
         </motion.div>
       </div>
     </motion.footer>
+    <CookieBanner />
+    <CookiePreferences />
+    </>
   );
 }

@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== '/events' && location.pathname !== '/' && <Nav />}
+      <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />

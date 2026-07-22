@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
+import { CookieProvider } from './components/CookieContext';
 import './index.css';
 import { initLenis } from './lib/lenis';
 import { initMotionFallback } from './lib/motion-fallback';
@@ -14,7 +15,9 @@ initMotionFallback();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <CookieProvider>
+        <App />
+      </CookieProvider>
     </BrowserRouter>
   </StrictMode>
 );
